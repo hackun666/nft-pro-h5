@@ -1,0 +1,48 @@
+.my_nft_list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+
+  .my_nft_list_item {
+    width: 300px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 15px;
+
+    .my_nft_item_img {
+      width: 300px;
+      height: 300px;
+      display: block;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    .my_nft_item_info {
+      padding: 10px 0;
+
+      .title {
+        font-size: 28px;
+        color: #000;
+        text-align: center;
+        font-weight: 500;
+        max-width: 300px;
+      }
+
+      .no {
+        font-size: 24px;
+        text-align: center;
+        color: #222;
+      }
+
+      .uni_id {
+        padding: 5px 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        margin: 0 auto;
+        font-size: 26px;
+        width: max-content;
+      }
+    }
+  }
+}

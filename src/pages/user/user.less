@@ -1,0 +1,229 @@
+.user_top {
+  padding: 5vh 25px 25px;
+  background-image: linear-gradient(135deg, #bbf8f0 10%, #ffceea 100%);
+  position: relative;
+
+  .sys_icon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+}
+.user_info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .face_box {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    border-radius: 50%;
+    margin-right: 20px;
+
+    .face {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+    }
+
+    .renzheng {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 100px;
+      margin-left: -50px;
+      height: 34px;
+      background: #fde9bb;
+      border-radius: 5px;
+      color: #876131;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+
+  .u_info {
+    margin-top: 20px;
+    .nickname {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .name {
+        font-size: 38px;
+        font-weight: 500;
+        color: #000;
+      }
+      .edit_info {
+        margin-left: 20px;
+        width: 30px;
+        height: 30px;
+      }
+    }
+    .tel {
+      font-size: 26px;
+      color: #666;
+    }
+  }
+}
+.address {
+  font-size: 26px;
+  color: #333;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .address_hash {
+    flex: 1;
+    margin-right: 10px;
+    max-width: 450px;
+  }
+
+  .copy_icon {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-left: auto;
+  }
+}
+.msg_ico {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+
+.u_main {
+  padding: 25px;
+}
+
+.u_nav {
+  width: 640px;
+  background-color: rgba(255,255,255,.7);
+  border-radius: 20px;
+  padding: 15px 30px;
+  margin-top: 30px;
+}
+
+
+
+.u_nav_list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+
+  .u_nav_item {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 24px;
+    color: #000;
+
+    .u_nav_ico {
+      width: 60px;
+      height: 60px;
+      display: block;
+    }
+  }
+}
+
+.u_menus {
+
+  .u_menu_item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 25px 0;
+    font-size: 32px;
+    color: #000;
+    border-bottom: 1px solid #f1f1f1;
+
+    .menu_ico {
+      width: 45px;
+      height: 45px;
+      margin-right: 20px;
+      display: block;
+    }
+
+    .arrow_box {
+      margin-left: auto;
+
+      .arrow_icon {
+        width: 30px;
+        height: 30px;
+        display: block;
+      }
+
+      .val {
+        font-size: 36px;
+        color: #9E7D13;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .u_menu_item:last-child {
+    border: none;
+  }
+}
+.my_gallery {
+  padding: 0 30px;
+  margin-top: 30px;
+  .gallery_tabs {
+    font-size: 28px;
+    color: #333;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .g_tab {
+      margin-right: 25px;
+    }
+    .now_on {
+      font-size: 32px;
+      font-weight: 500;
+      color: #000;
+    }
+  }
+  
+}
+.art_list_box {
+  padding: 25px;
+  .art_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    .nft_item {
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 10px;
+      border: 1px solid #aaa;
+      .nft_cover {
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        .nft_cover_img {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
+      }
+      .nft_info {
+        padding: 10px;
+        .nft_tit {
+          font-size: 30px;
+          font-weight: 500;
+        }
+        .nft_no {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
