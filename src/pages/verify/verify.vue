@@ -5,7 +5,8 @@
       <view class="rz_tit">如实填写实名认证信息</view>
       <view class="rz_tel">当前登录手机号 {{ user.mobile }}</view>
       <view class="rz_tip"
-        >按照法律法规要求，创建区块链地址需要用户提供身份信息，请填写与注册手机号实名一致的信息。绑定卡号，请绑定提现卡号 。</view
+        >按照法律法规要求，创建区块链地址需要用户提供身份信息，请填写与注册手机号实名一致的信息。绑定卡号，请绑定提现卡号
+        。</view
       >
       <view class="rz_form">
         <view class="rz_row">
@@ -45,7 +46,7 @@
           />
         </view>
 
-      <view class="rz_row">
+        <!-- <view class="rz_row">
           <view class="rz_label">验证码</view>
           <input
             type="text"
@@ -54,9 +55,8 @@
             v-model="verify_code"
           />
 
-        
-        <view class="get_code" @tap="getcode">{{ getcodetest }}</view>
-      </view>
+          <view class="get_code" @tap="getcode">{{ getcodetest }}</view>
+        </view> -->
 
         <view class="rz_btn flex_center" @tap="verify">立即认证</view>
       </view>
@@ -120,30 +120,30 @@ export default {
       });
     },
     verify() {
-      // Taro.showLoading({
-      //   title: "认证中...",
-      //   mask: true,
-      // });
-      if (this.verify_code.length < 1) {
-        Taro.showToast({
-          title: "请输入验证码",
-          icon: "none",
-        });
-        return;
-      }
-      if (this.flow_id.length < 1) {
-        Taro.showToast({
-          title: "信息不全",
-          icon: "none",
-        });
-        return;
-      }
-      
+      Taro.showLoading({
+        title: "认证中...",
+        mask: true,
+      });
+      // if (this.verify_code.length < 1) {
+      //   Taro.showToast({
+      //     title: "请输入验证码",
+      //     icon: "none",
+      //   });
+      //   return;
+      // }
+      // if (this.flow_id.length < 1) {
+      //   Taro.showToast({
+      //     title: "信息不全",
+      //     icon: "none",
+      //   });
+      //   return;
+      // }
+
       Taro.request({
-        url: serverUrl + "/userapi/eqbverify",
+        url: serverUrl + "/userapi/aliverify",
         data: {
           verify_code: this.verify_code,
-          flow_id: this.flow_id,
+          // flow_id: this.flow_id,
           token: this.token,
         },
       }).then((res) => {
@@ -245,7 +245,7 @@ export default {
           phone: this.phone,
           real_name: this.real_name,
           id_no: this.id_no,
-          bank_card_no: this.bank_card_no
+          bank_card_no: this.bank_card_no,
         },
       }).then((res) => {
         if (res.data.errcode == 0) {

@@ -58,7 +58,7 @@
             />
           </view> -->
 
-          <!-- <view class="pay_row" @tap="choosePay(3)">
+          <view class="pay_row" @tap="choosePay(3)">
             <image
               class="pay_ico"
               src="../../assets/img/shande.svg"
@@ -76,8 +76,8 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view> -->
-           <view class="pay_row" @tap="choosePay(5)">
+          </view>
+          <!-- <view class="pay_row" @tap="choosePay(5)">
             <image
               class="pay_ico"
               src="../../assets/img/llpay.svg"
@@ -95,10 +95,10 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view>
+          </view> -->
         </view>
       </view>
-      <view class="login_term">
+      <!-- <view class="login_term">
         <image
           class="chk_ico"
           v-if="agree_sta"
@@ -114,13 +114,11 @@
           @tap="agree"
         />
         <view
-          >我已阅读并同意<text
-            class="bbb"
-            @tap="showXY"
+          >我已阅读并同意<text class="bbb" @tap="showXY"
             >《连连支付服务协议》</text
           ></view
         >
-      </view>
+      </view> -->
       <view class="rz_btn flex_center" @tap="pay">确定支付</view>
     </view>
   </view>
@@ -156,7 +154,6 @@ export default {
   },
   onLoad(options) {
     this.oid = options.oid;
-    this.is_app = this.isApp();
   },
   beforeDestroy() {
     clearInterval(this.intval);
@@ -170,10 +167,10 @@ export default {
     this.getConfig();
   },
   methods: {
-    agree(){
+    agree() {
       this.agree_sta = !this.agree_sta;
     },
-    showXY(){
+    showXY() {
       window.location.href = "/llpayxieyi.docx";
     },
     getConfig() {
@@ -245,13 +242,6 @@ export default {
         }
       });
     },
-    isApp() {
-      if (navigator.userAgent.indexOf("bancang2022") != -1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     isWeixin() {
       var ua = navigator.userAgent.toLowerCase();
       console.log(ua);
@@ -269,35 +259,6 @@ export default {
         });
         return;
       }
-if (!this.agree_sta) {
-        Taro.showToast({
-          title: "请同意用户协议",
-          icon: "none",
-          duration: 2000,
-        });
-        return;
-      }
-      Taro.request({
-        url: serverUrl + "/llpay/paycreate",
-        data: {
-          token: this.token,
-          id: this.oid,
-        },
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          location.href = res.data.data;
-        } else {
-          Taro.showToast({
-                title: "调起支付失败",
-                icon: "none",
-              });
-        }
-      });
-    
-      return;
-
-
-
       if (this.pay_type == 5) {
         window.location.href = "/api/sandpay?id=" + this.oid;
         return;
@@ -325,8 +286,7 @@ if (!this.agree_sta) {
             }
           });
         } else {
-          window.location.href =
-            serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
+          window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
         }
       } else {
         if (process.env.TARO_ENV === "h5") {
@@ -391,13 +351,12 @@ if (!this.agree_sta) {
             if (res.data.data.djs > 0) {
               this.djs = res.data.data.djs;
               this.countdown();
-            }else{
+            } else {
               setTimeout(() => {
                 Taro.redirectTo({
                   url: "/pages/orders/orders",
-                }); 
+                });
               }, 500);
-              
             }
           }
         }
