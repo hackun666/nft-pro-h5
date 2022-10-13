@@ -1,1 +1,1 @@
-export const serverUrl = "//334art.com/";
+export const serverUrl = "//m.334art.com/";

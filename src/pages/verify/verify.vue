@@ -46,18 +46,6 @@
           />
         </view>
 
-        <!-- <view class="rz_row">
-          <view class="rz_label">验证码</view>
-          <input
-            type="text"
-            class="rz_ipt"
-            placeholder="请输入验证码"
-            v-model="verify_code"
-          />
-
-          <view class="get_code" @tap="getcode">{{ getcodetest }}</view>
-        </view> -->
-
         <view class="rz_btn flex_center" @tap="verify">立即认证</view>
       </view>
     </view>
@@ -86,12 +74,7 @@ export default {
       real_name: "",
       id_no: "",
       bank_card_no: "",
-      verify_code: "",
       token: getToken(),
-      getcodetest: "获取验证码",
-      isgetcode: true,
-      flow_id: "",
-      time: 0,
     };
   },
 
@@ -124,27 +107,14 @@ export default {
         title: "认证中...",
         mask: true,
       });
-      // if (this.verify_code.length < 1) {
-      //   Taro.showToast({
-      //     title: "请输入验证码",
-      //     icon: "none",
-      //   });
-      //   return;
-      // }
-      // if (this.flow_id.length < 1) {
-      //   Taro.showToast({
-      //     title: "信息不全",
-      //     icon: "none",
-      //   });
-      //   return;
-      // }
-
       Taro.request({
-        url: serverUrl + "/userapi/aliverify",
+        url: serverUrl + "/userapi/verify",
         data: {
-          verify_code: this.verify_code,
-          // flow_id: this.flow_id,
           token: this.token,
+          phone: this.phone,
+          real_name: this.real_name,
+          id_no: this.id_no,
+          bank_card_no: this.bank_card_no,
         },
       }).then((res) => {
         if (res.data.errcode == 0) {
@@ -165,117 +135,7 @@ export default {
         Taro.hideLoading();
       });
     },
-    getcode() {
-      if (this.real_name.length < 1) {
-        Taro.showToast({
-          title: "请输入真实姓名",
-          icon: "none",
-        });
-        return;
-      }
-      if (this.id_no.length < 1) {
-        Taro.showToast({
-          title: "请输入身份证号码",
-          icon: "none",
-        });
-        return;
-      }
-      //验证身份证号码
-      var reg =
-        /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-      if (!reg.test(this.id_no)) {
-        Taro.showToast({
-          title: "请输入正确的身份证号码",
-          icon: "none",
-        });
-        return;
-      }
-
-      //验证身份证号年龄
-      var myDate = new Date();
-      var age = myDate.getFullYear() - this.id_no.substring(6, 10);
-      if (age < 18) {
-        Taro.showToast({
-          title: "年龄不足18无法认证",
-          icon: "none",
-        });
-        return;
-      }
-
-      if (this.bank_card_no.length < 1) {
-        Taro.showToast({
-          title: "请输入银行卡号",
-          icon: "none",
-        });
-        return;
-      }
-
-      if (this.phone.length < 1) {
-        Taro.showToast({
-          title: "请输入银行预留手机号",
-          icon: "none",
-        });
-        return;
-      }
-      var that = this;
-      if (!this.isgetcode) {
-        return;
-      }
-      if (this.phone.length < 1) {
-        Taro.showToast({
-          title: "请填写手机号",
-          icon: "none",
-          duration: 2000,
-        });
-        return;
-      }
-      if (!/^1[3456789]\d{9}$/.test(this.phone)) {
-        Taro.showToast({
-          title: "手机号码有误，请重新填写",
-          icon: "none",
-          duration: 2000,
-        });
-        return;
-      }
-      that.isgetcode = false;
-      Taro.request({
-        url: serverUrl + "/userapi/eqbsms",
-        data: {
-          token: this.token,
-          phone: this.phone,
-          real_name: this.real_name,
-          id_no: this.id_no,
-          bank_card_no: this.bank_card_no,
-        },
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          this.flow_id = res.data.data;
-          Taro.showToast({
-            title: "发送成功",
-            icon: "none",
-            duration: 2000,
-          });
-          let timecount = setInterval(() => {
-            that.time++;
-            if (that.time > 59) {
-              clearInterval(timecount);
-              that.getcodetest = "获取验证码";
-              that.isgetcode = true;
-            } else {
-              that.getcodetest = 60 - parseInt(that.time) + "秒后重试";
-            }
-          }, 1000);
-          return;
-        } else {
-          Taro.showToast({
-            title: res.data.errmsg,
-            icon: "none",
-            duration: 2000,
-          });
-          that.isgetcode = true;
-        }
-      });
-    },
+    
   },
 };
 </script>

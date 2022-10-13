@@ -38,7 +38,7 @@
               mode="widthFix"
             />
           </view> -->
-          <!-- <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
+          <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
             <image
               class="pay_ico"
               src="../../assets/img/alipay.svg"
@@ -56,9 +56,9 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view> -->
+          </view>
 
-          <view class="pay_row" @tap="choosePay(3)">
+          <!-- <view class="pay_row" @tap="choosePay(3)">
             <image
               class="pay_ico"
               src="../../assets/img/shande.svg"
@@ -76,49 +76,9 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view>
-          <!-- <view class="pay_row" @tap="choosePay(5)">
-            <image
-              class="pay_ico"
-              src="../../assets/img/llpay.svg"
-              mode="widthFix"
-            />
-            <text>连连支付</text>
-            <image
-              class="chk_ico"
-              v-if="pay_type == 5"
-              src="../../assets/img/chked.svg"
-              mode="widthFix"
-            /><image
-              class="chk_ico"
-              v-else
-              src="../../assets/img/unchk.svg"
-              mode="widthFix"
-            />
           </view> -->
         </view>
       </view>
-      <!-- <view class="login_term">
-        <image
-          class="chk_ico"
-          v-if="agree_sta"
-          src="../../assets/img/agreed.svg"
-          mode="widthFix"
-          @tap="agree"
-        />
-        <image
-          class="chk_ico"
-          v-else
-          src="../../assets/img/uncheck.svg"
-          mode="widthFix"
-          @tap="agree"
-        />
-        <view
-          >我已阅读并同意<text class="bbb" @tap="showXY"
-            >《连连支付服务协议》</text
-          ></view
-        >
-      </view> -->
       <view class="rz_btn flex_center" @tap="pay">确定支付</view>
     </view>
   </view>
@@ -138,7 +98,7 @@ export default {
   data() {
     return {
       djs_str: "",
-      pay_type: 5,
+      pay_type: 0,
       env: process.env.TARO_ENV,
       inWeixin: this.isWeixin(),
       oid: 0,
@@ -259,10 +219,14 @@ export default {
         });
         return;
       }
-      if (this.pay_type == 5) {
-        window.location.href = "/api/sandpay?id=" + this.oid;
+      if (pay_type == 0) {
+        Taro.showToast({
+          title: "请选择支付方式",
+          icon: "none",
+        });
         return;
-      } else if (this.pay_type == 3) {
+      }
+       if (this.pay_type == 3) {
         window.location.href = "/api/sandpay?id=" + this.oid;
         return;
       } else if (this.pay_type == 2) {
