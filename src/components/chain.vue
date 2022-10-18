@@ -10,7 +10,7 @@
         src="../assets/img/wenchang.png"
         mode="widthFix"
       />
-      <view>提供技术支持</view>
+      <view>提供底层链服务</view>
     </view>
     </view>
 </template>

@@ -58,7 +58,7 @@
             />
           </view>
 
-          <!-- <view class="pay_row" @tap="choosePay(3)">
+          <view class="pay_row" @tap="choosePay(3)">
             <image
               class="pay_ico"
               src="../../assets/img/shande.svg"
@@ -76,7 +76,7 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view> -->
+          </view>
         </view>
       </view>
       <view class="rz_btn flex_center" @tap="pay">确定支付</view>
@@ -219,7 +219,7 @@ export default {
         });
         return;
       }
-      if (pay_type == 0) {
+      if (this.pay_type == 0) {
         Taro.showToast({
           title: "请选择支付方式",
           icon: "none",
@@ -227,7 +227,7 @@ export default {
         return;
       }
        if (this.pay_type == 3) {
-        window.location.href = "/api/sandpay?id=" + this.oid;
+        window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
         return;
       } else if (this.pay_type == 2) {
         //支付宝支付

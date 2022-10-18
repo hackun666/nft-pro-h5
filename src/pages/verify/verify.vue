@@ -4,7 +4,7 @@
     <view class="rz_box" v-if="user.rz_sta == 0">
       <view class="rz_tit">如实填写实名认证信息</view>
       <view class="rz_tel">当前登录手机号 {{ user.mobile }}</view>
-      <view class="rz_tip"
+      <view class="rz_tip2"
         >按照法律法规要求，创建区块链地址需要用户提供身份信息，请填写与注册手机号实名一致的信息。绑定卡号，请绑定提现卡号
         。</view
       >
