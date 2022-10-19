@@ -4,12 +4,13 @@
   z-index: 11;
   background-color: #fff;
 }
-.filter_bar_index {
+
+.filter_bar {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 
-  .filter_item_index {
+  .filter_item {
     width: 33%;
     height: 80px;
     font-size: 28px;
@@ -24,12 +25,15 @@
       margin-left: 10px;
     }
   }
+
   .nft_type {
     font-size: 30px;
+
     .tit {
       margin-right: 15px;
       border-bottom: 5px solid #fff;
     }
+
     .now {
       font-weight: 500;
       border-bottom: 5px solid #000;
@@ -43,83 +47,7 @@
     background-color: #f1f1f1;
   }
 }
-.filter_box {
-  position: fixed;
-  top: 200px;
-  width: 100%;
-  z-index: 11;
-  border-top: 1px solid #f1f1f1;
-  .f_list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    padding: 20px;
-    background-color: #fff;
-  }
-  .f_row {
-    font-size: 28px;
-    color: #000;
-    background-color: #f7f8f9;
-    padding: 15px 25px;
-    border-radius: 10px;
-    text-align: center;
-  }
-  .active {
-    background-color: #FA8BFF;
-    background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
 
-    color: #000;
-  }
-}
-.search_box {
-  padding: 25px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border-bottom: 1px solid #f1f1f1;
-  .search_innser {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #f1f1f1;
-    height: 50px;
-    padding: 10px 25px;
-    border-radius: 50px;
-    flex: 1;
-    margin-right: 20px;
-      .search_ico {
-        width: 36px;
-        height: 36px;
-        margin-right: 20px;
-      }
-
-      .s_ipt {
-        flex: 1;
-        border: none;
-        color: #000;
-        font-size: 28px;
-        line-height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        input {
-          line-height: 50px;
-        }
-      }
-  }
-  
-
-  .search_btn {
-    height: 60px;
-    background-color: #000;
-    border-radius: 60px;
-    margin-left: auto;
-    padding: 0 25px;
-    font-size: 26px;
-    color: #fff;
-  }
-}
 
 .good_list {
   padding: 20px;
@@ -132,6 +60,7 @@
     border-radius: 20px;
     overflow: hidden;
     position: relative;
+
     .is_lock {
       position: absolute;
       top: 0;
@@ -140,7 +69,8 @@
       height: 100%;
       display: flex;
       z-index: 1;
-      background-color: rgba(0,0,0,.5);
+      background-color: rgba(0, 0, 0, .5);
+
       .is_lock_img {
         width: 200px;
         height: 200px;
@@ -186,7 +116,7 @@
           font-size: 24px;
           color: #000;
           opacity: .5;
-          max-width: 160px;
+          max-width: 140px;
         }
 
         .u_box {

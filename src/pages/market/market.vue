@@ -1,84 +1,99 @@
 <template>
   <view class="main">
     <view class="filter_top">
-       <view class="search_box">
+      <view class="search_box">
         <view class="search_innser">
-        <image src="../../assets/img/s_ico.svg" class="search_ico" mode="widthFix" />
-        <input
-          type="text"
-          class="s_ipt"
-          v-model="keyword"
-          placeholder="搜索商品、专辑、盲盒"
-        />
+          <image
+            src="../../assets/img/s_ico.svg"
+            class="search_ico"
+            mode="widthFix"
+          />
+          <input
+            type="text"
+            class="s_ipt"
+            v-model="keyword"
+            placeholder="搜索商品"
+          />
         </view>
         <view class="search_btn flex_center" @tap="search">搜索</view>
       </view>
-      <view class="filter_bar">
-        <view class="filter_item nft_type">
-          <text class="tit " @tap="showType(1)" :class="now_type == 1 ? 'now' : ''">藏品</text>
-          <text class="tit" @tap="showType(2)" :class="now_type == 2 ? 'now' : ''">盲盒</text>
+      <view class="filter_bar_index">
+        <view class="filter_item_index" @tap="showNft">
+          <text class="tit" :class="show_type == 1 ? 'now' : ''">藏品</text>
+          <!-- <text class="tit" @tap="showType(2)" :class="now_type == 2 ? 'now' : ''">盲盒</text> -->
         </view>
         <view class="line"></view>
-        <view class="filter_item" @tap="showFilter(3)">
-          <text class="tit">价格排序</text>
-        </view>
-        <view class="line"></view>
-        <view class="filter_item"  @tap="showFilter(2)">
-          <text class="tit">时间排序</text>
-        </view>
-        <view class="line"></view>
-        <view class="filter_item" @tap="showFilter(1)">
+        <view class="filter_item_index" @tap="showXilie">
           <text class="tit">系列</text>
         </view>
-      </view>
+        <view class="line"></view>
+        <view class="filter_item_index" @tap="sortPrice">
+          <text class="tit">价格排序</text>
 
-     
+          <image
+            v-if="sort_price == 2"
+            src="../../assets/img/up.png"
+            mode="aspectFill"
+            class="sort_icon"
+          />
+          <image
+            v-if="sort_price == 1"
+            src="../../assets/img/down.png"
+            mode="aspectFill"
+            class="sort_icon"
+          />
+        </view>
+        <view class="line"></view>
+        <view class="filter_item_index" @tap="sortTime">
+          <text class="tit">时间排序</text>
+          <image
+            v-if="sort_time == 2"
+            src="../../assets/img/up.png"
+            mode="aspectFill"
+            class="sort_icon"
+          />
+          <image
+            v-if="sort_time == 1"
+            src="../../assets/img/down.png"
+            mode="aspectFill"
+            class="sort_icon"
+          />
+        </view>
+      </view>
     </view>
-    <view class="mask" v-if="show_filter > 0" @tap="hideFilter"></view>
-    <view class="filter_box" v-if="show_filter > 0">
-      <view class="f_list" v-if="show_filter == 1">
+
+    <view class="mask" v-if="xilie_box > 0" @tap="hideFilter"></view>
+    <view class="filter_box" v-if="xilie_box > 0">
+      <view class="f_list">
         <view
           class="f_row"
-          v-for="item in nfts"
+          v-for="item in xilie"
           :key="item.id"
-          @tap="findNft(item.id)"
-          :class="nft_id == item.nft_id ? 'active' : ''"
-          >{{ item.title }}</view
+          @tap="goXItem(item.id)"
+          >{{ item.name }}</view
         >
-      </view>
-      <view class="f_list" v-if="show_filter == 3">
-        <view class="f_row" @tap="sortPrice(1)">价格由低到高</view>
-        <view class="f_row" @tap="sortPrice(2)">价格由高到低</view>
-      </view>
-      <view class="f_list" v-if="show_filter == 2">
-        <view class="f_row" @tap="sortTime(1)">最新发布</view>
-        <view class="f_row" @tap="sortTime(2)">最早发布</view>
       </view>
     </view>
-    <view class="info_box2">
-      <view class="good_list" v-if="good_list.length > 0">
+    <view class="info_box" v-if="show_type == 1">
+      <view class="good_list" v-if="nft_on_sale.length > 0">
         <view
           class="good_item"
-          v-for="item in good_list"
+          v-for="item in nft_on_sale"
           :key="item.id"
-          @tap="goItem(item.id)"
+          @tap="goItem(item.title)"
         >
-          <view class="is_lock" v-if="item.is_lock == 1">
-            <image
-              src="../../assets/img/is_lock.svg"
-              mode="aspectFill"
-              class="is_lock_img"
-            />
-          </view>
           <image :src="item.cover" mode="aspectFill" class="good_cover" />
           <view class="good_info">
             <view class="good_title el">{{ item.title }}</view>
             <view class="good_meta">
-              <view class="u_num"
-                >{{ item.nftinfo.no }}/{{ item.total_num }}</view
+              <!-- <view class="u_num" v-if="item.nft_type == 1"
+                >{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
               >
+              <view class="u_num" v-if="item.nft_type == 2">盲盒</view> -->
+              <view class="u_num">共{{ item.sale_num }}件寄售</view>
               <view class="price"
-                >&yen;<text class="big">{{ item.price }}</text></view
+                >&yen;<text class="big price_font">{{ item.price }}</text
+                >起</view
               >
             </view>
           </view>
@@ -92,8 +107,39 @@
         />
         <view class="no_result_text">暂无商品</view>
       </view>
-      <view class="no_more" v-if="loadAll">没有更多了</view>
     </view>
+    <!-- <view class="info_box" v-else>
+      <view class="good_list" v-if="nft_on_sale.length > 0">
+        <view
+          class="good_item"
+          v-for="item in xilie_list"
+          :key="item.id"
+          @tap="goXItem(item.id)"
+        >
+          <image :src="item.cover" mode="aspectFill" class="good_cover" />
+          <view class="good_info">
+            <view class="good_title el">{{ item.name }}</view>
+            <view class="good_meta">
+              <view class="u_num" v-if="item.sale_num > 0"
+                >共{{ item.sale_num }}件寄售</view
+              ><view class="u_num" v-else>暂无寄售</view>
+              <view class="price" v-if="item.sale_num > 0"
+                >&yen;<text class="big price_font">{{ item.price }}</text
+                >起</view
+              >
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="no_result" v-else>
+        <image
+          src="../../assets/img/no_result.svg"
+          mode="widthFix"
+          class="no_result_img"
+        />
+        <view class="no_result_text">暂无商品</view>
+      </view>
+    </view> -->
     <footerBar />
   </view>
 </template>
@@ -101,6 +147,7 @@
 <script>
 import Taro from "@tarojs/taro";
 import "./market.less";
+import { isLogined, getToken } from "../../utils/tools";
 import Navbar from "../../components/navbar";
 import footerBar from "../../components/footer";
 import { serverUrl } from "../../utils/config";
@@ -112,192 +159,154 @@ export default {
   data() {
     return {
       user: {},
-      good_list: [],
-      page: 1,
-      show_search: false,
       keyword: "",
-      loading: false,
-      loadAll: false,
-      sort_price: 0,
-      sort_time: 0,
-      show_filter: 0,
-      artist: [],
-      producer: [],
-      artist_id: 0,
-      producer_id: 0,
-      now_type: 1,
-      nfts: [],
-      nft_id: 0,
+      sort_price: 1,
+      sort_time: 1,
+      nft_on_sale: [],
+      config: {},
+      token: getToken(),
+      show_type: 1,
+      xilie_list: [],
+      xilie: [],
+      xilie_box: false,
     };
   },
   onShow() {
+    this.checkAuth();
     this.getData();
-    this.getNfts();
-  },
-  onReachBottom() {
-    this.getData();
+    this.getConfig();
+    this.getUser();
   },
   methods: {
-    showType(type){
-      this.now_type = type;
-      this.good_list = [];
-      this.page = 1;
-      this.loadAll = false;
+    showNft() {
+      this.show_type = 1;
+      this.xilie_box = false;
       this.getData();
     },
-    findNft(id){
-      this.loading = false;
-      this.loadAll = false;
-      this.good_list = [];
-      this.page = 1;
-      this.nft_id = id;
-      this.show_filter = 0;
-      this.getData();
-    },
-    onRefresh(done) {
-      this.good_list = [];
-      this.page = 1;
-      this.loadAll = false;
-      this.getData();
-    },
-    findArtist(id) {
-      this.loading = false;
-      this.loadAll = false;
-      this.good_list = [];
-      this.page = 1;
-      this.artist_id = id;
-      this.producer_id = 0;
-      this.show_filter = 0;
-      this.getData();
-    },
-    findProducer(id) {
-      this.loading = false;
-      this.loadAll = false;
-      this.good_list = [];
-      this.page = 1;
-      this.producer_id = id;
-      this.artist_id = 0;
-      this.show_filter = 0;
-      this.getData();
-    },
-    getNfts() {
-      Taro.request({
-        url: serverUrl + "/api/nftslist",
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          this.nfts = res.data.data;
-        }
-      });
-    },
-    getArtist() {
-      Taro.request({
-        url: serverUrl + "/api/artistlist",
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          this.artist = res.data.data;
-        }
-      });
-    },
-    getProducer() {
-      Taro.request({
-        url: serverUrl + "/api/producerlist",
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          this.producer = res.data.data;
-        }
-      });
+    showXilie() {
+      this.xilie_box = true;
     },
     hideFilter() {
-      this.show_filter = 0;
+      this.xilie_box = false;
     },
-    showFilter(tab) {
-      this.page = 1;
-      console.log(tab);
-      this.show_search = false;
-      this.show_filter = tab;
-    },
-    sortPrice(tp) {
-      this.loading = false;
-      this.loadAll = false;
-      this.page = 1;
-      this.loadAll = false;
-      this.good_list = [];
-      this.sort_time = 0;
-      this.sort_price = tp;
-      this.show_filter = 0;
-      this.getData();
-    },
-    sortTime(tp) {
-      this.loading = false;
-      this.loadAll = false;
-      this.page = 1;
-      this.loadAll = false;
-      this.good_list = [];
-      this.sort_price = 0;
-      this.sort_time = tp;
-      this.show_filter = 0;
-      this.getData();
-    },
-    search() {
-      if (this.keyword.length < 1) {
-        Taro.showToast({
-          title: "请输入搜索内容",
-          icon: "none",
-        });
-        return;
-      }
-      this.page = 1;
-      this.good_list = [];
-      this.getData();
-    },
-    showSearch() {
-      this.show_filter = 0;
-      this.show_search = !this.show_search;
-    },
-    goItem(id) {
-      Taro.navigateTo({
-        url: "/pages/item/item?id=" + id,
-      });
-    },
-    getData() {
-      if (!this.loading && !this.loadAll) {
-        Taro.showLoading({
-          title: "加载中",
-        });
-        this.loading = true;
+    checkAuth() {
+      if (isLogined()) {
         Taro.request({
-          url: serverUrl + "/market/market",
+          url: serverUrl + "/userapi/index",
           data: {
-            page: this.page,
-            keyword: this.keyword,
-            sort_price: this.sort_price,
-            sort_time: this.sort_time,
-            artist_id: this.artist_id,
-            producer_id: this.producer_id,
-            nft_type: this.now_type,
-            nft_id: this.nft_id,
+            token: this.token,
           },
         }).then((res) => {
-          if (res.data.errcode == 0) {
-            if (this.page == 1) {
-              if (res.data.data.length > 0) {
-                this.good_list = res.data.data;
-                this.page++;
-              }
-            } else {
-              if (res.data.data.length > 0) {
-                this.good_list = [...this.good_list, ...res.data.data];
-                this.page++;
-              } else {
-                this.loadAll = true;
-              }
-            }
+          if (res.data.errcode != 0) {
+            Taro.removeStorageSync("token");
+            setTimeout(() => {
+              Taro.navigateTo({
+                url: "/pages/login/login",
+              });
+            }, 500);
           }
-          Taro.hideLoading();
-          this.loading = false;
-          Taro.stopPullDownRefresh();
         });
+      } else {
+        setTimeout(() => {
+          Taro.navigateTo({
+            url: "/pages/login/login",
+          });
+        }, 500);
       }
+    },
+    getConfig() {
+      Taro.request({
+        url: serverUrl + "/api/baseconfig",
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.config = res.data.data;
+        }
+      });
+    },
+    getUser() {
+      Taro.request({
+        url: serverUrl + "/userapi/userinfo",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.user = res.data.user;
+        }
+      });
+    },
+    sortPrice() {
+      this.sort_time = 0;
+      if (this.sort_price > 1) {
+        this.sort_price = 0;
+      } else {
+        this.sort_price += 1;
+      }
+      this.getData();
+    },
+    sortTime() {
+      this.sort_price = 0;
+      if (this.sort_time > 1) {
+        this.sort_time = 0;
+      } else {
+        this.sort_time += 1;
+      }
+      this.getData();
+    },
+    goItem(title) {
+      Taro.navigateTo({
+        url: "/pages/salelist/salelist?title=" + title,
+      });
+    },
+    goXItem(xl_id) {
+      Taro.navigateTo({
+        url: "/pages/xilie/xilie?xl_id=" + xl_id,
+      });
+    },
+    search() {
+      this.page = 1;
+      this.nft_on_sale = [];
+      this.getData();
+    },
+    getData() {
+      Taro.showLoading({
+        title: "加载中",
+      });
+      this.loading = true;
+      Taro.request({
+        url: serverUrl + "/market/nftonsale",
+        data: {
+          keyword: this.keyword,
+          sort_price: this.sort_price,
+          sort_time: this.sort_time,
+          show_type: this.show_type,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.nft_on_sale = res.data.data;
+          this.xilie = res.data.xilie;
+        }
+        Taro.hideLoading();
+      });
+    },
+    getXilie() {
+      Taro.showLoading({
+        title: "加载中",
+      });
+      this.loading = true;
+      Taro.request({
+        url: serverUrl + "/market/xilie",
+        data: {
+          keyword: this.keyword,
+          sort_price: this.sort_price,
+          sort_time: this.sort_time,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.xilie_list = res.data.data;
+        }
+        Taro.hideLoading();
+      });
     },
   },
 };

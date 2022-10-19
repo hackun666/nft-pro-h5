@@ -35,10 +35,8 @@
 .img_show {
   position: relative;
   padding-top: 80px;
-  background: url(http://staticsoft.7192.com/2022/0518/20220518141146381_real.png) no-repeat center top -100px;
-  background-size: 50% auto;
 
-  .img_meta {
+  .img_meta_detail {
     padding-top: 30px;
     display: flex;
     justify-content: center;
@@ -67,7 +65,7 @@
     margin: 0 auto;
     display: block;
     perspective: 537px;
-    border: 5px solid #b4a67d;
+    border: 5px solid #fff;
     border-radius: 20px;
     position: relative;
     -webkit-transform-style: preserve-3d;
@@ -98,8 +96,8 @@
       height: 100%;
       display: block;
       border-radius: 20px;
-      background-size: 200px auto!important
       ;
+      background-size: 200px auto !important;
     }
   }
 
@@ -122,6 +120,7 @@
   }
 }
 
+
 @keyframes rotate {
   from {
     transform: rotateY(0deg);
@@ -130,6 +129,12 @@
   to {
     transform: rotateY(360deg);
   }
+}
+
+.content_src {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .nft_info_box {
@@ -146,7 +151,7 @@
 
   .nft_pirce {
     font-size: 30px;
-    color: #fff;
+    color: #000;
 
     .fee {
       font-size: 50px;
@@ -156,7 +161,7 @@
 
   .title {
     font-size: 36px;
-    color: #fff;
+    color: #000;
     font-weight: 500;
     margin-bottom: 20px;
   }
@@ -167,7 +172,7 @@
 
     .sold {
       margin-left: auto;
-      color: #fff;
+      color: #000;
       font-size: 26px;
     }
   }
@@ -175,12 +180,12 @@
   .nft_author {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #222222;
+    border-top: 1px solid #f1f1f1;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     font-size: 24px;
-    color: #979797;
+    color: #333;
 
 
     .author_face {
@@ -194,44 +199,9 @@
     .author_info {
       .author_name {
         font-size: 28px;
-        color: #fff;
+        color: #000;
       }
     }
-  }
-}
-
-.chain_info {
-  padding: 30px;
-
-  .chain_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #222222;
-    color: #979797;
-
-    .chain_label {
-      font-size: 26px;
-    }
-
-    .chain_val {
-      font-size: 26px;
-
-      .hash {
-        max-width: 400px;
-      }
-
-      .copy_icon {
-        width: 30px;
-        height: 30px;
-        margin-left: 10px;
-      }
-    }
-  }
-
-  .chain_row:last-child {
-    border: none;
   }
 }
 
@@ -264,21 +234,21 @@
   font-size: 24px;
 }
 
-.fix_buy_btn {
+.fix_buy_btn_combo {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 120px;
   display: flex;
-  background-color: #252928;
   z-index: 1;
 
-  .buy_btn {
+  .buy_btn_combo {
     width: 680px;
     height: 88px;
     margin: auto;
-    background-color: #fff;
+    background-color: #FA8BFF;
+    background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
     border-radius: 20px;
     color: #000;
     font-size: 34px;
@@ -288,4 +258,118 @@
 
 .f_blank {
   height: 120px;
+}
+
+.combo_rules2 {
+  padding: 30px;
+
+  .nft_need2 {
+    margin-top: 20px;
+
+    .nft_need_item2 {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      margin-bottom: 20px;
+
+      .need_nft_cover2 {
+        width: 120px;
+        height: 120px;
+        display: block;
+        border-radius: 10px;
+        margin-right: 20px;
+        border: 1px solid #000;
+      }
+      .need_nft_info {
+        flex: 1;
+      }
+      .need_nft_tit2 {
+        font-size: 28px;
+        font-weight: 500;
+        color: #000;
+      }
+
+      .need_nft_num2 {
+        font-size: 24px;
+        font-weight: 500;
+        color: #000;
+      }
+
+      .has_num {
+        color: #3376f3;
+      }
+    }
+  }
+}
+
+.fix_buy_btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, .88), hsla(0, 0%, 100%, .93) 24%, hsla(0, 0%, 100%, .98) 44%, #fff);
+  z-index: 1;
+
+  .fix_buy_innder {
+    padding: 0 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 120px;
+  }
+
+  .price_area {
+    font-size: 30px;
+    color: #000;
+    min-width: 120px;
+
+    .bigg {
+      font-size: 50px;
+      font-weight: 500;
+    }
+  }
+
+  .buy_btn {
+    width: 300px;
+    height: 88px;
+    background-color: #3376f3;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: auto;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+
+  .djs_time {
+    font-size: 24px;
+  }
+
+  .roll {
+    width: 200px;
+  }
+}
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .num_ipt {
+    display: block;
+    font-size: 24px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 10px;
+    width: 60px;
+    text-align: center;
+    background-color: #f1f1f1;
+    color: #3376f3;
+  }
+  .counter_icon {
+    width: 40px;
+    height: 40px;
+  }
 }

@@ -1,0 +1,33 @@
+<svg width="750" height="1189" viewBox="0 0 750 1189" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_188_781" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="750" height="1189">
+        <rect width="750" height="1189" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_188_781)">
+        <g opacity="0.5" filter="url(#filter0_f_188_781)">
+            <ellipse cx="646.5" cy="132.5" rx="103.5" ry="152.5" fill="#1BDFE9"/>
+        </g>
+        <g opacity="0.5" filter="url(#filter1_f_188_781)">
+            <circle cx="124.5" cy="236.5" r="95.5" fill="#0066ED"/>
+        </g>
+        <g opacity="0.6" filter="url(#filter2_f_188_781)">
+            <ellipse cx="154.5" cy="894" rx="236.5" ry="43" fill="#FF5050"/>
+        </g>
+    </g>
+    <defs>
+        <filter id="filter0_f_188_781" x="349" y="-214" width="595" height="693" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="97" result="effect1_foregroundBlur_188_781"/>
+        </filter>
+        <filter id="filter1_f_188_781" x="-165" y="-53" width="579" height="579" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="97" result="effect1_foregroundBlur_188_781"/>
+        </filter>
+        <filter id="filter2_f_188_781" x="-316" y="617" width="941" height="554" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="117" result="effect1_foregroundBlur_188_781"/>
+        </filter>
+    </defs>
+</svg>

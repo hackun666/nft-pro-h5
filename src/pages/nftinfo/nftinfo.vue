@@ -49,7 +49,7 @@
         <view class="chain_row">
             <view class="chain_label">藏品编号</view>
             <view class="chain_val flex_start">
-              <text class="hash el">No.{{ nftinfo.no }} / {{nftinfo.max_no}}</text>
+              <text class="hash el"># {{ nftinfo.no }} / {{nftinfo.max_no}}</text>
             </view>
           </view>
         <view class="chain_row">

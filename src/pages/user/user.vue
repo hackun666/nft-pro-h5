@@ -92,7 +92,7 @@
               src="../../assets/img/box.svg"
               mode="widthFix"
             />
-            <text>拆拆乐</text>
+            <text>盲盒</text>
           </view>
           <view class="u_nav_item" @tap="goPage('/pages/translog/translog')">
             <image

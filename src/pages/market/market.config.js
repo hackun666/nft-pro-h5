@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: "交易市场",
+  navigationBarTitleText: "交流流转中心",
   // enablePullDownRefresh: true,
 };

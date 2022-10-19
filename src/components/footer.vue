@@ -6,7 +6,7 @@
         class="footer_item"
         v-for="(item, index) in tabsList"
         :key="index"
-        @tap="tabsChange(item,index)"
+        @tap="tabsChange(item, index)"
       >
         <image
           mode="widthFix"
@@ -29,56 +29,82 @@ export default {
     return {
       tabIndex: 0,
       path: "/pages/index/index",
-      tabsList: [
-        {
-          src: require("../assets/img/home_o.svg"),
-          src1: require("../assets/img/home.svg"),
-          text: "首页",
-          path: "/pages/index/index",
-        },
-        // {
-        //   src: require("../assets/img/market_o.svg"),
-        //   src1: require("../assets/img/market.svg"),
-        //   text: "市场",
-        //   path: "/pages/market/market",
-        // },
-        {
-          src: require("../assets/img/user_o.svg"),
-          src1: require("../assets/img/user.svg"),
-          text: "我的",
-          path: "/pages/user/user",
-        },
-      ],
+      tabsList: [],
       config: {},
-      
     };
   },
   computed: {},
   created() {
     let page = Taro.getCurrentInstance();
     this.path = page.router.path.replace(/(\?|#)[^'"]*/, "");
+    this.getConfig();
   },
   methods: {
-    tabsChange(item,index) {
-      if(item.text == '我的'){
-        if(isLogined()){
+    getConfig() {
+      Taro.request({
+        url: serverUrl + "/api/baseconfig",
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.config = res.data.data;
+          if (this.config.market_sta == 1) {
+            this.tabsList = [
+              {
+                src: require("../assets/img/home_o.svg"),
+                src1: require("../assets/img/home.svg"),
+                text: "首页",
+                path: "/pages/index/index",
+              },
+              {
+                src: require("../assets/img/market_o.svg"),
+                src1: require("../assets/img/market.svg"),
+                text: "流转",
+                path: "/pages/market/market",
+              },
+              {
+                src: require("../assets/img/user_o.svg"),
+                src1: require("../assets/img/user.svg"),
+                text: "我的",
+                path: "/pages/user/user",
+              },
+            ];
+          } else {
+            this.tabsList = [
+              {
+                src: require("../assets/img/home_o.svg"),
+                src1: require("../assets/img/home.svg"),
+                text: "首页",
+                path: "/pages/index/index",
+              },
+              {
+                src: require("../assets/img/user_o.svg"),
+                src1: require("../assets/img/user.svg"),
+                text: "我的",
+                path: "/pages/user/user",
+              },
+            ];
+          }
+        }
+      });
+    },
+    tabsChange(item, index) {
+      if (item.text == "我的") {
+        if (isLogined()) {
           Taro.redirectTo({
             url: this.tabsList[index].path,
           });
-        }else{
+        } else {
           Taro.navigateTo({
             url: "/pages/login/login",
           });
         }
-      } else{
+      } else {
         Taro.redirectTo({
-            url: this.tabsList[index].path,
-          });
+          url: this.tabsList[index].path,
+        });
       }
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

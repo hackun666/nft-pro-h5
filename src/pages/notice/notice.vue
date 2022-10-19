@@ -1,7 +1,7 @@
 <template>
   <view class="main">
     <Navbar title="系统公告" />
-    <view class="info_box2">
+    <view class="info_box3">
       <view class="notice_list" v-if="list.length > 0">
         <view
           class="notice_item"

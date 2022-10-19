@@ -22,7 +22,7 @@
           <image class="my_nft_item_img" :src="item.uri" mode="aspectFill"/>
           <view class="my_nft_item_info">
             <view class="title el">{{ item.name }}</view>
-            <view class="no price_font"> {{item.no}} - {{item.max_no}}</view>
+            <view class="no price_font"># {{item.no}} / {{item.max_no}}</view>
           </view>
         </view>
       </view>

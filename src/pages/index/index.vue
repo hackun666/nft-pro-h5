@@ -1,8 +1,8 @@
 <template>
   <view class="main">
-    <view class="header" v-if="config.logo">
+    <!-- <view class="header" v-if="config.logo">
       <image v-if="config" :src="config.logo" class="logo" mode="aspectFit" />
-    </view>
+    </view> -->
     <swiper
       v-if="banners"
       class="banners"
@@ -15,7 +15,12 @@
         v-for="(item, index) in banners"
         :key="index"
       >
-        <image :src="item.src" @tap="gotoUrl(item.url)" class="banner_img" mode="aspectFill" />
+        <image
+          :src="item.src"
+          @tap="gotoUrl(item.url)"
+          class="banner_img"
+          mode="aspectFill"
+        />
       </swiper-item>
     </swiper>
     <view class="notice_bar" v-if="notice.length > 0">
@@ -35,7 +40,7 @@
           v-for="(item, index) in notice"
           :key="index"
           @tap="goNotice(item.id)"
-          ><text class="txt  el">{{ item.title }}</text></swiper-item
+          ><text class="txt el">{{ item.title }}</text></swiper-item
         >
       </swiper>
       <image
@@ -51,13 +56,15 @@
           class="nft_item"
           v-for="item in nft_list"
           :key="item.id"
-          @tap="goDetail(item.id)"
+          @tap="goDetail(item.id, item.exchange_sta)"
         >
           <view>
             <view class="sale_status" v-if="item.sold_out == 1">已售罄</view>
-            <view class="sale_status" v-else>{{item.sale_sta == 1 ? '抢购中':item.sale_date+' 开售'}}</view>
+            <view class="sale_status" v-else>{{
+              item.sale_sta == 1 ? "抢购中" : item.sale_date + " 开售"
+            }}</view>
           </view>
-            <view class="is_box" v-if="item.nft_type == 2">盲盒</view>
+          <!-- <view class="is_box" v-if="item.nft_type == 2">盲盒</view> -->
           <image class="nft_cover" :src="item.cover" mode="widthFix" />
           <view class="nft_info">
             <view class="title">{{ item.title }}</view>
@@ -72,7 +79,10 @@
               <view class="tag_label flex_center" v-if="item.tag_b"
                 ><text class="val">{{ item.tag_b }}</text></view
               >
-              <view class="price price_font"
+              <view class="price price_font" v-if="item.exchange_sta == 1"
+                >限时兑换</view
+              >
+              <view class="price price_font" v-else
                 >&yen;<text class="fee">{{ item.price }}</text></view
               >
             </view>
@@ -88,7 +98,7 @@
         <view class="no_result_text">敬请期待</view>
       </view>
     </view>
-    
+
     <view class="rz_bar flex_start" v-if="user && user.rz_sta == 0">
       <view class="text">实名认证后才能购买数字藏品</view>
       <view class="rz_go flex_center" @tap="goPage('/pages/verify/verify')"
@@ -156,9 +166,8 @@ export default {
     this.getNftList();
   },
   methods: {
-    
     gotoUrl(url) {
-      if(url){
+      if (url) {
         window.location.href = url;
       }
     },
@@ -233,6 +242,7 @@ export default {
           url: serverUrl + "/api/getlist",
           data: {
             page: this.page,
+            token: this.token,
           },
         }).then((res) => {
           if (res.data.errcode == 0) {
@@ -278,10 +288,16 @@ export default {
         url: "/pages/notice/notice",
       });
     },
-    goDetail(id) {
-      Taro.navigateTo({
-        url: "/pages/detail/detail?id=" + id,
-      });
+    goDetail(id, exchange_sta) {
+      if (exchange_sta > 0) {
+        Taro.navigateTo({
+          url: "/pages/exchange/exchange?id=" + id,
+        });
+      } else {
+        Taro.navigateTo({
+          url: "/pages/detail/detail?id=" + id,
+        });
+      }
     },
     goBox(id) {
       Taro.navigateTo({
@@ -291,11 +307,6 @@ export default {
     goPage(page) {
       Taro.navigateTo({
         url: page,
-      });
-    },
-    goDetail(id) {
-      Taro.navigateTo({
-        url: "/pages/detail/detail?id=" + id,
       });
     },
   },
