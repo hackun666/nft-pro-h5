@@ -9,7 +9,7 @@
     </view>
    <view class="img_show" v-if="info.format == 1">
       <view class="img_con" :class="sta_3d ? 'rotate' : ''">
-        <image class="cover_img" :src="info.cover" mode="widthFix" 
+        <image class="cover_img" :src="info.cover" mode="widthFix"
           @tap="previewImage(info.cover)"/>
         <view
           class="back_img"
@@ -35,7 +35,7 @@
           @tap="switch3d"
         />
       </view>
-      <image src="../../assets/img/wutai3.png" class="wutai" mode="widthFix" />
+      <image src="../../assets/img/wutai1.png" class="wutai" mode="widthFix" />
     </view>
     <video
       v-else-if="info.format == 2" :poster="info.cover" :src="info.asset_url"  :controls="false" :autoplay="true" :loop="true" initial-time="0"
@@ -74,58 +74,60 @@
             <text>{{ info.producer.name }}</text>
           </view>
         </view>
-        <view class="chain_info2 ">
-        <view class="info_title">区块链信息</view>
-        <view class="chain_row">
-          <view class="chain_label">认证网络</view>
-          <view class="chain_val flex_start">
-            <text class="hash el">BSN</text>
-          </view>
-        </view>
-        <view class="chain_row">
-          <view class="chain_label">合约地址</view>
-          <view class="chain_val flex_start">
-            <text class="hash el">{{ info.class_id }}</text>
-          </view>
-        </view>
-        <view class="chain_row">
-          <view class="chain_label">交易哈希</view>
-          <view class="chain_val flex_start">
-            <text class="hash el">{{ info.tx_hash }}</text>
-            <image
-              @tap="copyTxt(info.tx_hash)"
-              src="../../assets/img/copy.svg"
-              class="copy_icon"
-              mode="widthFix"
-            />
-          </view>
-        </view>
-      </view>
+
       </view>
 
-      
 
-      <!-- <view class="info_tips_box card" v-if="info.artist">
+
+      <view class="info_tips_box card" v-if="info.artist">
         <view class="info_title">艺术家简介</view>
         <view class="info_tips">{{ info.artist.desc }}</view>
-      </view> -->
+      </view>
       <view class="info_tips_box card">
-        <!-- <view class="info_title">藏品介绍</view> -->
-          <image src="../../assets/img/jieshao.png" mode="widthFix" class="info_img" />
+        <view class="info_title">藏品介绍</view>
         <view class="info_tips">{{ info.long_desc }}</view>
         <view class="content">
           <image :src="info.content_src" mode="widthFix" class="content_src" />
         </view>
       </view>
 
+
+
       <view class="info_tips_box card">
-        <!-- <view class="info_title">权益须知</view> -->
-          <image src="../../assets/img/shucang.png" mode="widthFix" class="info_img" />
+        <view class="info_title">区块链认证信息</view>
+        <view class="chain_info2 ">
+          <view class="chain_row">
+            <view class="chain_label">认证网络</view>
+            <view class="chain_val flex_start">
+              <text class="hash el">BSN文昌链</text>
+            </view>
+          </view>
+          <view class="chain_row">
+            <view class="chain_label">合约地址</view>
+            <view class="chain_val flex_start">
+              <text class="hash el">{{ info.class_id }}</text>
+            </view>
+          </view>
+          <view class="chain_row">
+            <view class="chain_label">交易哈希</view>
+            <view class="chain_val flex_start">
+              <text class="hash el">{{ info.tx_hash }}</text>
+              <image
+                @tap="copyTxt(info.tx_hash)"
+                src="../../assets/img/copy.svg"
+                class="copy_icon"
+                mode="widthFix"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="info_tips_box card">
+        <view class="info_title">权益须知</view>
         <view class="info_tips">{{ config.quanyi }}</view>
       </view>
       <view class="info_tips_box card">
-        <!-- <view class="info_title">购买须知</view> -->
-          <image src="../../assets/img/xuzhi.png" mode="widthFix" class="info_img" />
+        <view class="info_title">购买须知</view>
         <view class="info_tips">{{ config.goumai }}</view>
       </view>
     </view>
@@ -377,7 +379,7 @@ export default {
     },
     buy() {
       if (isLogined()) {
-        
+
         if(this.buynum > this.buy_num_max) {
           Taro.showToast({
             title: "最多只能购买" + this.buy_num_max + "件",

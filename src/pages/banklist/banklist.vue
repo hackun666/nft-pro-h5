@@ -1,13 +1,22 @@
 <template>
   <view class="main">
-    <Navbar title="合成藏品" />
+    <Navbar title="我的银行卡" />
     <view class="info_box2">
-      <view class="hecheng_list" v-if="list.length > 0">
-        <view class="hecheng_item" v-for="item in list" :key="item.id" @tap="goNftInfo(item.id)">
-          <image class="hecheng_item_img" :src="item.info.cover" mode="widthFix"/>
-          <view class="hecheng_item_info">
-            <view class="title">{{ item.title }}</view>
+      <view class="bank_list" v-if="banklist.length > 0">
+        <view
+          class="bank_item"
+          v-for="item in banklist"
+          :key="item.id"
+        >
+          <view class="bank_top">
+            <view class="bank_name">{{ item.bank_name }}</view>
+            <view class="bank_mobile price_font">手机号：{{ item.mobile }}</view>
           </view>
+          <view class="bank_no price_font">{{ item.bank_card_no }}</view>
+            <view class="bank_cert">证件号码：{{ item.cert_no }}</view>
+          <!-- <view class="bank_meta">
+            <view class="bank_t" @tap="unbind">解绑银行卡</view>
+          </view> -->
         </view>
       </view>
       <view class="no_result" v-else>
@@ -19,47 +28,76 @@
         <view class="no_result_text">暂无记录</view>
       </view>
     </view>
+    <view class="add_new_btn" @tap="addbank">绑定新银行卡</view>
   </view>
 </template>
 
 <script>
 import Taro from "@tarojs/taro";
-import "./build.less";
+import "./banklist.less";
 import Navbar from "../../components/navbar";
-import { serverUrl } from "../../utils/config";
-
 import { isLogined, getToken } from "../../utils/tools";
+import { serverUrl } from "../../utils/config";
 export default {
   components: {
     Navbar,
   },
   data() {
     return {
+      cache: 0,
       user: {},
       token: getToken(),
-      list: [],
+      banklist: [],
     };
   },
   onShow() {
     this.checkAuth();
     this.getUser();
-    this.getData();
+    this.getBank();
   },
+  mounted() {},
   methods: {
-    goNftInfo(id){
-      Taro.navigateTo({
-        url: "/pages/nftinfo/nftinfo?id=" + id,
+    unbind() {
+      Taro.showModal({
+        title: "系统提示",
+        content: "您确认要解绑该银行卡吗",
+        success: function (res) {
+          if (res.confirm) {
+          }
+        },
       });
     },
-    getData() {
+    addbank() {
+      // Taro.navigateTo({
+      //   url: "/pages/addbank/addbank",
+      // });
+
       Taro.request({
-        url: serverUrl + "/userapi/mynft",
+        url: serverUrl + "/heepay/addbank",
+        data: {
+          token: this.token,
+          uid: this.user.uid,
+        },
+      }).then((res) => {
+        if (res.data.code == 200) {
+          window.location.href = res.data.url
+        }else{
+          Taro.showToast({
+            title: res.data.sub_msg,
+            icon: "none",
+          });
+        }
+      });
+    },
+    getBank() {
+      Taro.request({
+        url: serverUrl + "/userapi/banklist",
         data: {
           token: this.token,
         },
       }).then((res) => {
         if (res.data.errcode == 0) {
-          this.list = res.data.data;
+          this.banklist = res.data.data;
         }
       });
     },
@@ -99,22 +137,6 @@ export default {
           this.user = res.data.user;
         }
       });
-    },
-
-    formatDate(time) {
-      var date = new Date(time * 1000);
-      var y = date.getFullYear();
-      var m = date.getMonth() + 1;
-      m = m < 10 ? "0" + m : m;
-      var d = date.getDate();
-      d = d < 10 ? "0" + d : d;
-      var h = date.getHours();
-      h = h < 10 ? "0" + h : h;
-      var minute = date.getMinutes();
-      var second = date.getSeconds();
-      minute = minute < 10 ? "0" + minute : minute;
-      second = second < 10 ? "0" + second : second;
-      return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
     },
   },
 };

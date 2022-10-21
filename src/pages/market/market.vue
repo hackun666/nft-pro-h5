@@ -101,7 +101,7 @@
       </view>
       <view class="no_result" v-else>
         <image
-          src="../../assets/img/no_result.svg"
+          src="../../assets/img/no_data.png"
           mode="widthFix"
           class="no_result_img"
         />
@@ -133,7 +133,7 @@
       </view>
       <view class="no_result" v-else>
         <image
-          src="../../assets/img/no_result.svg"
+          src="../../assets/img/no_data.png"
           mode="widthFix"
           class="no_result_img"
         />

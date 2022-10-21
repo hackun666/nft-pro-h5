@@ -2,56 +2,67 @@
   <view class="main">
     <Navbar title="藏品详情" />
     <view class="info_box2">
-
-
-      <view class="img_show" v-if="nftinfo.nft_info.format == 1 || nftinfo.nft_info.format == 2">
-      <view class="img_con" :class="sta_3d ? 'rotate' : ''">
-        <image class="cover_img" :src="nftinfo.nft_info.cover" mode="widthFix" 
-          @tap="previewImage(nftinfo.nft_info.cover)"/>
-        <view
-          class="back_img"
-          :style="{
-            background: 'url(' + config.logo + ') no-repeat center #fff',
-            backgroundSize: '200px auto',
-          }"
-        ></view>
-      </view>
-      <view class="img_meta_detail">
+      <view
+        class="img_show"
+        v-if="nftinfo.nft_info.format == 1 || nftinfo.nft_info.format == 2"
+      >
+        <view class="img_con" :class="sta_3d ? 'rotate' : ''">
+          <image
+            class="cover_img"
+            :src="nftinfo.nft_info.cover"
+            mode="widthFix"
+            @tap="previewImage(nftinfo.nft_info.cover)"
+          />
+          <view
+            class="back_img"
+            :style="{
+              background: 'url(' + config.logo + ') no-repeat center #fff',
+              backgroundSize: '200px auto',
+            }"
+          ></view>
+        </view>
+        <view class="img_meta_detail">
+          <image
+            src="../../assets/img/3d_on.svg"
+            v-if="sta_3d"
+            class="img_3d"
+            mode="widthFix"
+            @tap="switch3d"
+          />
+          <image
+            src="../../assets/img/3d_off.svg"
+            v-else
+            class="img_3d"
+            mode="widthFix"
+            @tap="switch3d"
+          />
+        </view>
         <image
-          src="../../assets/img/3d_on.svg"
-          v-if="sta_3d"
-          class="img_3d"
+          src="../../assets/img/wutai3.png"
+          class="wutai"
           mode="widthFix"
-          @tap="switch3d"
-        />
-        <image
-          src="../../assets/img/3d_off.svg"
-          v-else
-          class="img_3d"
-          mode="widthFix"
-          @tap="switch3d"
         />
       </view>
-      <image src="../../assets/img/wutai3.png" class="wutai" mode="widthFix" />
-    </view>
-    <video
-      v-else-if="nftinfo.nft_info.format == 3" :poster="nftinfo.nft_info.cover" :src="nftinfo.nft_info.asset_url"  :controls="false" :autoplay="true" :loop="true" initial-time="0"
-      class="mp4_cover"
-    ></video>
-
-
-      <!-- <view class="order_thumb">
-        <image class="thumb" :src="nftinfo.uri" mode="widthFix" />
-      </view>  -->
-     
-      <view class="chain_info card"> 
-        <image src="../../assets/img/shucang.png" mode="widthFix" class="info_img" />
+      <video
+        v-else-if="nftinfo.nft_info.format == 3"
+        :poster="nftinfo.nft_info.cover"
+        :src="nftinfo.nft_info.asset_url"
+        :controls="false"
+        :autoplay="true"
+        :loop="true"
+        initial-time="0"
+        class="mp4_cover"
+      ></video>
+      <view class="chain_info card">
+        <view class="info_title">藏品介绍</view>
         <view class="chain_row">
-            <view class="chain_label">藏品编号</view>
-            <view class="chain_val flex_start">
-              <text class="hash el"># {{ nftinfo.no }} / {{nftinfo.max_no}}</text>
-            </view>
+          <view class="chain_label">藏品编号</view>
+          <view class="chain_val flex_start">
+            <text class="hash el"
+              ># {{ nftinfo.no }} / {{ nftinfo.max_no }}</text
+            >
           </view>
+        </view>
         <view class="chain_row">
           <view class="chain_label">藏品名称</view>
           <view class="chain_val flex_start">
@@ -67,7 +78,9 @@
         <view class="chain_row">
           <view class="chain_label">持有者地址</view>
           <view class="chain_val flex_start">
-            <text class="hash" @tap="copyTxt(nftinfo.owner)">{{ nftinfo.owner }}</text>
+            <text class="hash" @tap="copyTxt(nftinfo.owner)">{{
+              nftinfo.owner
+            }}</text>
           </view>
         </view>
         <!-- <view class="chain_row">
@@ -83,7 +96,6 @@
           </view>
         </view> -->
         <view v-if="nftinfo.chain_sta == 2">
-
           <view class="chain_row">
             <view class="chain_label">藏品地址</view>
             <view class="chain_val flex_start">
@@ -93,7 +105,9 @@
           <view class="chain_row">
             <view class="chain_label">交易哈希</view>
             <view class="chain_val flex_start">
-              <text class="hash" @tap="copyTxt(nftinfo.tx_hash)">{{ nftinfo.tx_hash }}</text>
+              <text class="hash" @tap="copyTxt(nftinfo.tx_hash)">{{
+                nftinfo.tx_hash
+              }}</text>
             </view>
           </view>
           <view class="chain_row">
@@ -104,12 +118,15 @@
           </view>
         </view>
       </view>
-       <view class="info_tips_box card">
-        <!-- <view class="info_title">藏品介绍</view> -->
-          <image src="../../assets/img/jieshao.png" mode="widthFix" class="info_img" />
+      <view class="info_tips_box card">
+        <view class="info_title">藏品介绍</view>
         <view class="info_tips">{{ nftinfo.nft_info.long_desc }}</view>
         <view class="content">
-          <image :src="nftinfo.nft_info.content_src" mode="widthFix" class="content_src" />
+          <image
+            :src="nftinfo.nft_info.content_src"
+            mode="widthFix"
+            class="content_src"
+          />
         </view>
       </view>
     </view>
@@ -126,7 +143,7 @@
       <view
         class="op_item"
         v-if="config.trans_sta == 1 && market.onsale == 0"
-        @tap="goPage('/pages/send/send?id=' + id + '&class_id='+class_id)"
+        @tap="goPage('/pages/send/send?id=' + id + '&class_id=' + class_id)"
       >
         <image
           src="../../assets/img/send.svg"
@@ -135,19 +152,19 @@
         />
         <view>转赠</view>
       </view>
-      <view class="op_item" v-if="config.market_sta == 1 && market.onsale == 0" @tap="sell">
+      <view
+        class="op_item"
+        v-if="config.market_sta == 1 && market.onsale == 0"
+        @tap="sell"
+      >
         <image
           src="../../assets/img/sale.svg"
           mode="widthFix"
           class="op_item_img"
         />
-        <view>转售</view>
+        <view>寄售</view>
       </view>
-      <view
-        class="op_item"
-        v-if=" market.onsale == 1"
-        @tap="xiajia"
-      >
+      <view class="op_item" v-if="market.onsale == 1" @tap="xiajia">
         <image
           src="../../assets/img/sale.svg"
           mode="widthFix"
@@ -178,12 +195,25 @@
           v-model="price"
         />
       </view>
+      <view class="sell_price">
+        <text>安全密码</text>
+        <input
+          type="password"
+          class="sell_price_ipt"
+          placeholder="填写账户安全密码"
+          v-model="password"
+        />
+      </view>
       <view class="sell_btn flex_center" @tap="upSell">立即上架</view>
       <view class="fee_tips">
-        <view>平台服务费：{{nftinfo.nft_info.sxf}}%</view>
-        <view>版权费：{{nftinfo.nft_info.copy_fee}}%</view>
+        <view>平台服务费：{{ nftinfo.nft_info.sxf }}%</view>
+        <view>版权费：{{ nftinfo.nft_info.copy_fee }}%</view>
       </view>
     </view>
+
+
+
+
   </view>
 </template>
 
@@ -217,8 +247,9 @@ export default {
       class_id: "",
       sta_3d: false,
       market: {
-        onsale: 0
-      }
+        onsale: 0,
+      },
+      password: "",
     };
   },
   onLoad(options) {
@@ -243,7 +274,7 @@ export default {
         },
       });
     },
-    xiajiaNft(){
+    xiajiaNft() {
       Taro.request({
         url: serverUrl + "/userapi/xiajia",
         data: {
@@ -256,9 +287,9 @@ export default {
             title: "下架成功",
             icon: "success",
           });
-          this.sell_box = false
+          this.sell_box = false;
           this.getMarketInfo();
-        }else{
+        } else {
           Taro.showToast({
             title: res.data.errmsg,
             icon: "none",
@@ -274,12 +305,20 @@ export default {
         });
         return;
       }
+      if (this.password.length < 6) {
+        Taro.showToast({
+          title: "请输入正确的安全密码",
+          icon: "none",
+        });
+        return;
+      }
       Taro.request({
-        url: serverUrl + "/market/sell",
+        url: serverUrl + "/userapi/sell",
         data: {
           token: this.token,
           id: this.id,
           price: this.price,
+          password: this.password,
         },
       }).then((res) => {
         if (res.data.errcode == 0) {
@@ -289,7 +328,7 @@ export default {
           });
           this.sell_box = false;
           this.getMarketInfo();
-        }else{
+        } else {
           Taro.showToast({
             title: res.data.errmsg,
             icon: "none",
@@ -298,7 +337,23 @@ export default {
       });
     },
     sell() {
-      this.sell_box = true;
+      this.checkpass();
+    },
+    checkpass() {
+      Taro.request({
+        url: serverUrl + "/userapi/checkpass",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.sell_box = true;
+        } else {
+          Taro.navigateTo({
+            url: "/pages/safepass/safepass",
+          });
+        }
+      });
     },
     hideSell() {
       this.sell_box = false;
@@ -312,17 +367,6 @@ export default {
         }
       });
     },
-    showPoster() {
-      this.ewm =
-        "http://eicshop.7192.com/ewm.php?url=" +
-        encodeURIComponent(
-          this.config.domain + "#/pages/index/index"
-        );
-        console.log(this.ewm)
-      setTimeout(() => {
-        this.show_poster = true;
-      }, 500);
-    },
     download() {
       Taro.previewImage({
         current: "", // 当前显示图片的http链接
@@ -333,12 +377,12 @@ export default {
         icon: "none",
       });
     },
-    
-    switch3d(){
+
+    switch3d() {
       this.sta_3d = !this.sta_3d;
     },
     previewImage(img_src) {
-      this.sta_3d = false
+      this.sta_3d = false;
       Taro.previewImage({
         current: "", // 当前显示图片的http链接
         urls: [img_src], // 需要预览的图片http链接列表
@@ -411,7 +455,7 @@ export default {
           id: this.id,
         },
       }).then((res) => {
-        if(res.data.market){
+        if (res.data.market) {
           this.market = res.data.market;
         }
       });

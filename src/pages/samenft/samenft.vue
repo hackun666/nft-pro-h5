@@ -19,6 +19,9 @@
       </view>
       <view class="my_nft_list" v-if="list.length > 0">
         <view class="my_nft_list_item" v-for="item in list" :key="item.id" @tap="goNftInfo(item.id)">
+          <view class="market_price" v-if="now_tab == 1"
+            >挂售价格：&yen;{{ item.market.price }}</view
+          >
           <image class="my_nft_item_img" :src="item.uri" mode="aspectFill"/>
           <view class="my_nft_item_info">
             <view class="title el">{{ item.name }}</view>
@@ -28,7 +31,7 @@
       </view>
       <view class="no_result" v-else>
         <image
-          src="../../assets/img/no_result.svg"
+          src="../../assets/img/no_data.png"
           mode="widthFix"
           class="no_result_img"
         />

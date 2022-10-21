@@ -2,7 +2,7 @@
   <view class="main">
     <Navbar title="支付订单" />
     <view class="order_thumb">
-      <image class="thumb" :src="orderInfo.cover" mode="widthFix" />
+      <image class="thumb" :src="orderInfo.cover" mode="aspectFill" />
     </view>
     <view class="info_box2">
       <view class="pay_djs">付款倒计时：{{ djs_str }}</view>
@@ -19,7 +19,7 @@
       <view class="o_card">
         <view class="info_title">选择支付方式</view>
         <view class="pay_choose">
-          <!-- <view class="pay_row" @tap="choosePay(1)">
+          <view class="pay_row" @tap="choosePay(1)">
             <image
               class="pay_ico"
               src="../../assets/img/wechat.svg"
@@ -37,7 +37,7 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view> -->
+          </view>
           <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
             <image
               class="pay_ico"
@@ -77,9 +77,66 @@
               mode="widthFix"
             />
           </view>
+
+          <view class="pay_row" @tap="choosePay(4)">
+            <image
+              class="pay_ico"
+              src="../../assets/img/llpay.svg"
+              mode="widthFix"
+            />
+            <text>汇元支付</text>
+            <image
+              class="chk_ico"
+              v-if="pay_type == 4"
+              src="../../assets/img/chked.svg"
+              mode="widthFix"
+            /><image
+              class="chk_ico"
+              v-else
+              src="../../assets/img/unchk.svg"
+              mode="widthFix"
+            />
+          </view>
         </view>
       </view>
       <view class="rz_btn flex_center" @tap="pay">确定支付</view>
+    </view>
+
+    <view class="mask" v-if="hy_pay" @tap="hy_pay = false"></view>
+    <view class="hy_pay" v-if="hy_pay">
+      <view class="info_tit">选择银行卡</view>
+      <view class="bank_list">
+        <view class="bank_choose_item flex_start"
+          v-for="item in banklist"
+          :key="item.id" @tap="chooseBank(item.id)">
+          <view class="bank_data">
+
+            <view class="bank_name el">{{ item.bank_name }}</view>
+            <view class="bank_no price_font el">{{ item.bank_card_no }}</view>
+          </view>
+          <image
+              class="chk_ico"
+              v-if="bank_id == item.id"
+              src="../../assets/img/chked.svg"
+              mode="widthFix"
+            /><image
+              class="chk_ico"
+              v-else
+              src="../../assets/img/unchk.svg"
+              mode="widthFix"
+            />
+        </view>
+        <view class="choose_btn flex_center" @tap="hyPay">提交订单</view>
+      </view>
+    </view>
+
+    <view class="mask" v-if="hy_box" @tap="hy_box = false"></view>
+    <view class="sms_box" v-if="hy_box">
+      <view class="info_tit">付款验证码</view>
+      <view class="sms_input ">
+        <input class="price_font" maxlength="6" type="text" placeholder="填写支付验证码" v-model="hy_sms">
+      </view>
+        <view class="smspay_btn flex_center" @tap="hyPayOk">确认支付</view>
     </view>
   </view>
 </template>
@@ -110,6 +167,11 @@ export default {
       djs: 0,
       runtimes: 0,
       agree_sta: false,
+      hy_pay: false,
+      banklist: [],
+      bank_id: 0,
+      hy_box: false,
+      hy_sms: "",
     };
   },
   onLoad(options) {
@@ -127,6 +189,88 @@ export default {
     this.getConfig();
   },
   methods: {
+    chooseBank(bank_id){
+      this.bank_id = bank_id
+    },
+    hyPayOk(){
+      if(this.hy_sms.length < 1){
+        Taro.showToast({
+          title: "请填写支付验证码",
+          icon: "none",
+        });
+        return
+      }
+      Taro.request({
+        url: serverUrl + "/heepay/dopay",
+        data: {
+          token: this.token,
+          oid: this.oid,
+          sms: this.hy_sms
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+        }else{
+          Taro.showToast({
+            title: res.data.errmsg,
+            icon: "none",
+          });
+          return
+        }
+      });
+    },
+    hyPay(){
+      if(this.bank_id == 0){
+        Taro.showToast({
+          title: "请选择付款银行卡",
+          icon: "none",
+        });
+        return
+      }
+      Taro.request({
+        url: serverUrl + "/heepay/webpay",
+        data: {
+          token: this.token,
+          bank_id: this.bank_id,
+          oid: this.oid,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.hy_pay = false
+          this.hy_box = true
+        }else{
+          Taro.showToast({
+            title: res.data.errmsg,
+            icon: "none",
+          });
+          return
+        }
+      });
+    },
+    getBank() {
+      Taro.request({
+        url: serverUrl + "/userapi/banklist",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          if(res.data.data.length > 0){
+            this.banklist = res.data.data;
+            this.hy_pay = true
+          }else{
+            Taro.showToast({
+              title: "请先进行银行卡签约",
+              icon: "none",
+            });
+            setTimeout(() => {
+              Taro.navigateTo({
+                url: "/pages/banklist/banklist",
+              });
+            }, 500);
+          }
+        }
+      });
+    },
     agree() {
       this.agree_sta = !this.agree_sta;
     },
@@ -230,69 +374,33 @@ export default {
         window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
         return;
       } else if (this.pay_type == 2) {
-        //支付宝支付
-
-        if (this.is_app) {
-          Taro.request({
-            url: serverUrl + "/wxpay/appalipay",
-            data: {
-              oid: this.oid,
-            },
-          }).then((res) => {
-            if (res.data.errcode == 0) {
-              aliPay(res.data.data);
-              // opennewview({title:'34242',url:'http://m.7192.com'});
-            } else {
-              Taro.showToast({
-                title: "调起支付失败",
-                icon: "none",
-              });
-            }
-          });
-        } else {
-          window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
-        }
+        window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
+        this.getBank();
+      } else if (this.pay_type == 4) {
+        this.getBank();
       } else {
         if (process.env.TARO_ENV === "h5") {
           if (this.inWeixin) {
             //在微信内部
             window.location.href = serverUrl + "/wxpay/index?oid=" + this.oid;
           } else {
-            if (this.is_app) {
-              Taro.request({
-                url: serverUrl + "/wxpay/apppay",
-                data: {
-                  oid: this.oid,
-                },
-              }).then((res) => {
-                if (res.data.code == "SUCCESS") {
-                  wxPay(res.data.result);
-                } else {
-                  Taro.showToast({
-                    title: res.data.errmsg,
-                    icon: "none",
-                  });
-                  return;
-                }
-              });
-            } else {
-              Taro.request({
-                url: serverUrl + "/wxpay/mpay",
-                data: {
-                  oid: this.oid,
-                },
-              }).then((res) => {
-                if (res.data.errcode == 0) {
-                  window.location.href = res.data.mwebUrl;
-                } else {
-                  Taro.showToast({
-                    title: res.data.errmsg,
-                    icon: "none",
-                  });
-                  return;
-                }
-              });
-            }
+
+            Taro.request({
+              url: serverUrl + "/wxpay/mpay",
+              data: {
+                oid: this.oid,
+              },
+            }).then((res) => {
+              if (res.data.errcode == 0) {
+                window.location.href = res.data.mwebUrl;
+              } else {
+                Taro.showToast({
+                  title: res.data.errmsg,
+                  icon: "none",
+                });
+                return;
+              }
+            });
           }
         }
       }

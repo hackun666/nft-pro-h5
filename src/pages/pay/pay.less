@@ -1,10 +1,10 @@
 .order_thumb {
-  padding: 35px;
-} 
+  padding: 25px;
+}
 
 .thumb {
     width: 100%;
-    height: auto;
+    height: 400px;
     display: block;
     border-radius: 20px;
 }
@@ -110,4 +110,96 @@
   color: #000;
   font-size: 32px;
   border-radius: 20px;
+}
+
+
+.hy_pay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-image: linear-gradient(0deg, #232425 0%, #1b1b1b 100%);
+  z-index: 2;
+  .info_tit {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 500;
+    color: #fff;
+    padding-top: 20px;
+  }
+  .bank_list {
+    padding: 25px;
+    .bank_choose_item {
+      height: 80px;
+      font-size: 26px;
+      color: #fff;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 20px;
+      .bank_data {
+        margin-right: 10px;
+      }
+      .bank_no {
+        font-size: 32px;
+        font-weight: 500;
+      }
+      .chk_ico {
+          width: 40px;
+          height: 40px;
+          margin-left: auto;
+      }
+    }
+    .choose_btn {
+      width: 100%;
+      height: 80px;
+      border-radius: 20px;
+      color: #000;
+      background-color: #1dffff;
+      font-size: 28px;
+    }
+  }
+}
+
+.sms_box {
+
+  position: fixed;
+  width: 500px;
+  top: 30%;
+  left: 50%;
+  padding: 25px 50px;
+  margin-left: -300px;
+  background-image: linear-gradient(0deg, #232425 0%, #1b1b1b 100%);
+  z-index: 2;
+  border-radius: 20px;
+  .info_tit {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 30px;
+  }
+  .sms_input {
+    display: flex;
+    background-color: #555;
+    padding: 10px;
+  border-radius: 10px;
+    margin-bottom: 30px;
+    input {
+      text-align: center;
+      border: none;
+      font-size: 30px;
+      font-weight: 500;
+      color: #fff;
+    }
+  }
+  .smspay_btn {
+
+      width: 100%;
+      height: 80px;
+      border-radius: 20px;
+      color: #000;
+      background-color: #1dffff;
+      font-size: 28px;
+  }
 }

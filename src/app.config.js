@@ -44,11 +44,12 @@ export default {
     "pages/exchange/exchange",
     "pages/salelist/salelist",
     "pages/xilie/xilie",
+    "pages/banklist/banklist",
   ],
   window: {
     backgroundTextStyle: "dark",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "墩墩艺术",
+    navigationBarTitleText: "天堂文创",
     navigationBarTextStyle: "white",
     backgroundColor: "#1c2236",
   },

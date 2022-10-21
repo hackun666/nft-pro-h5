@@ -87,7 +87,7 @@
             <view class="good_title el">{{ item.title }}</view>
             <view class="good_meta">
               <view class="u_num" v-if="item.nft_type == 1"
-                >#{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
+                >编号 #{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
               >
               <view class="u_num" v-if="item.nft_type == 2">盲盒</view>
               <view class="price"
@@ -99,7 +99,7 @@
       </view>
       <view class="no_result" v-else>
         <image
-          src="../../assets/img/no_result.svg"
+          src="../../assets/img/no_data.png"
           mode="widthFix"
           class="no_result_img"
         />

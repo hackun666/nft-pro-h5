@@ -9,7 +9,7 @@
     </view>
     <view class="img_show" v-if="info.format == 1">
       <view class="img_con" :class="sta_3d ? 'rotate' : ''">
-        <image class="cover_img" :src="info.cover" mode="widthFix" 
+        <image class="cover_img" :src="info.cover" mode="widthFix"
           @tap="previewImage(info.cover)"/>
         <view
           class="back_img"
@@ -35,7 +35,7 @@
           @tap="switch3d"
         />
       </view>
-      <image src="../../assets/img/wutai3.png" class="wutai" mode="widthFix" />
+      <image src="../../assets/img/wutai1.png" class="wutai" mode="widthFix" />
     </view>
     <video
       v-else-if="info.format == 2" :poster="info.cover" :src="info.asset_url"  :controls="false" :autoplay="true" :loop="true" initial-time="0"
@@ -55,9 +55,9 @@
           <view class="tag_label flex_center" v-if="info.tag_b"
             ><text class="val">{{ info.tag_b }}</text></view
           >
-          <view class="sold" v-if="market.nft_type == 1">编号: {{nftinfo.no }}/{{nftinfo.max_no}}</view>
+          <view class="sold" v-if="market.nft_type == 1">编号: #{{nftinfo.no }}/{{nftinfo.max_no}}</view>
         </view>
-        <!-- <view class="nft_author" v-if="info.artist">
+        <view class="nft_author" v-if="info.artist">
           <image
             :src="info.artist.face"
             class="author_face"
@@ -67,9 +67,9 @@
             <view>创作者</view>
             <view class="author_name">{{ info.artist.name }}</view>
           </view>
-        </view> -->
+        </view>
 
-          
+
       </view>
 
       <view class="chain_info card">
@@ -104,15 +104,14 @@
           </view>
         </view>
       </view>
-       
-<!--       
+
+
       <view class="info_tips_box card" v-if="info.artist">
         <view class="info_title">艺术家简介</view>
         <view class="info_tips">{{ info.artist.desc }}</view>
-      </view> -->
+      </view>
       <view class="info_tips_box card">
-          <image src="../../assets/img/jieshao.png" mode="widthFix" class="info_img" />
-        <!-- <view class="info_title">藏品介绍</view> -->
+        <view class="info_title">藏品介绍</view>
         <view class="info_tips">{{ info.long_desc }}</view>
         <view class="content">
           <image :src="info.content_src" mode="widthFix" class="content_src"/>
@@ -130,31 +129,17 @@
       </view>
 
       <view class="info_tips_box card">
-        <!-- <view class="info_title">权益须知</view> -->
-          <image src="../../assets/img/shucang.png" mode="widthFix" class="info_img" />
+        <view class="info_title">权益须知</view>
         <view class="info_tips">{{config.quanyi}}</view>
       </view>
       <view class="info_tips_box card">
-        <!-- <view class="info_title">购买须知</view> -->
-          <image src="../../assets/img/xuzhi.png" mode="widthFix" class="info_img" />
+        <view class="info_title">购买须知</view>
         <view class="info_tips">{{config.goumai}}</view>
       </view>
     </view>
     <view class="f_blank"></view>
     <view class="fix_buy_btn_item">
       <view class="buy_btn_item flex_center" @tap="buy">立即购买</view>
-    </view>
-
-     <!-- <view class="share_icon flex_center"  @tap="showPoster">
-      <image
-        class="share_img"
-        src="../../assets/img/share_top.svg"
-        mode="widthFix"
-      />
-    </view> -->
-    <view class="poster_box" v-if="show_poster">
-      <Poster :title="info.title" :cover="info.cover" :ewm="ewm" />
-      <image src="../../assets/img/close.svg" class="close_icon" mode="widthFix" @tap="hidePoster"/>
     </view>
   </view>
 </template>
@@ -165,10 +150,8 @@ import "./item.less";
 
 import { isLogined, getToken } from "../../utils/tools";
 import { serverUrl } from "../../utils/config";
-import Poster from "../../components/poster";
 export default {
   components: {
-    Poster,
   },
   data() {
     return {
@@ -180,7 +163,6 @@ export default {
       sta_3d: false,
       ewm: "",
       config: {},
-      show_poster: false,
       holder: {},
       nftinfo: {},
     };
@@ -306,7 +288,7 @@ export default {
         }
       });
     },
-    
+
   },
 };
 </script>
