@@ -65,7 +65,7 @@
             }}</view>
           </view>
           <!-- <view class="is_box" v-if="item.nft_type == 2">盲盒</view> -->
-          <image class="nft_cover" :src="item.cover" mode="aspectFill" />
+          <image class="nft_cover" :src="item.cover" mode="widthFix" />
           <view class="nft_info">
             <view class="title">{{ item.title }}</view>
             <view class="nft_meta flex_start">

@@ -7,13 +7,13 @@
           <view class="no">排名</view>
           <view class="mobile">手机号</view>
           <view class="ref_num">拉新人数</view>
-          <view class="ref_num">有效人数</view>
+          <!-- <view class="ref_num">有效人数</view> -->
         </view>
         <view class="rank_row" v-for="(item,index) in list" :key="item.uid">
           <view class="no">{{index + 1}}</view>
           <view class="mobile">{{hidePhone(item.mobile)}}</view>
           <view class="ref_num">{{item.ref_num}}人</view>
-          <view class="ref_num">{{item.real_num}}人</view>
+          <!-- <view class="ref_num">{{item.real_num}}人</view> -->
         </view>
       </view>
       <view class="no_result" v-else>

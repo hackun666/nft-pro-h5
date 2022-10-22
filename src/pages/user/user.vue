@@ -62,13 +62,21 @@
             />
             <text>我的订单</text>
           </view>
-          <view class="u_nav_item" @tap="goPage('/pages/balance/balance')">
+          <!-- <view class="u_nav_item" @tap="goPage('/pages/balance/balance')">
             <image
               class="u_nav_ico"
               src="../../assets/img/cash.svg"
               mode="widthFix"
             />
             <text>我的账户</text>
+          </view> -->
+          <view class="u_nav_item" @tap="goHee">
+            <image
+              class="u_nav_ico"
+              src="../../assets/img/cash.svg"
+              mode="widthFix"
+            />
+            <text>汇元钱包</text>
           </view>
           <view class="u_nav_item" @tap="goPage('/pages/cashlog/cashlog')">
             <image
@@ -229,6 +237,18 @@ export default {
   methods: {
     changeTab(tab) {
       this.now_tab = tab;
+    },
+    goHee(){
+      Taro.request({
+        url: serverUrl + "/heepay/open",
+        data: {
+          uid: this.user.uid,
+        },
+      }).then((res) => {
+        if (res.data.result_code == 'SUCCESS') {
+          window.location.href = res.data.redirect_url;
+        }
+      });
     },
     getConfig() {
       Taro.request({

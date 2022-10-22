@@ -14,6 +14,16 @@
             />
           </view>
         </view>
+        <!-- <view class="u_menu_item" @tap="goPage('/pages/banklist/banklist')">
+          <text>我的银行卡</text>
+          <view class="arrow_box flex_center">
+            <image
+              src="../../assets/img/arrow.svg"
+              class="arrow_icon"
+              mode="widthFix"
+            />
+          </view>
+        </view> -->
         <view class="u_menu_item" @tap="goPage('/pages/safty/safty')">
           <text>账户安全</text>
           <view class="arrow_box flex_center">

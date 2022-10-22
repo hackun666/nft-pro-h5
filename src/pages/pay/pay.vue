@@ -106,25 +106,27 @@
     <view class="hy_pay" v-if="hy_pay">
       <view class="info_tit">选择银行卡</view>
       <view class="bank_list">
-        <view class="bank_choose_item flex_start"
+        <view
+          class="bank_choose_item flex_start"
           v-for="item in banklist"
-          :key="item.id" @tap="chooseBank(item.id)">
+          :key="item.id"
+          @tap="chooseBank(item.id)"
+        >
           <view class="bank_data">
-
             <view class="bank_name el">{{ item.bank_name }}</view>
             <view class="bank_no price_font el">{{ item.bank_card_no }}</view>
           </view>
           <image
-              class="chk_ico"
-              v-if="bank_id == item.id"
-              src="../../assets/img/chked.svg"
-              mode="widthFix"
-            /><image
-              class="chk_ico"
-              v-else
-              src="../../assets/img/unchk.svg"
-              mode="widthFix"
-            />
+            class="chk_ico"
+            v-if="bank_id == item.id"
+            src="../../assets/img/chked.svg"
+            mode="widthFix"
+          /><image
+            class="chk_ico"
+            v-else
+            src="../../assets/img/unchk.svg"
+            mode="widthFix"
+          />
         </view>
         <view class="choose_btn flex_center" @tap="hyPay">提交订单</view>
       </view>
@@ -133,10 +135,16 @@
     <view class="mask" v-if="hy_box" @tap="hy_box = false"></view>
     <view class="sms_box" v-if="hy_box">
       <view class="info_tit">付款验证码</view>
-      <view class="sms_input ">
-        <input class="price_font" maxlength="6" type="text" placeholder="填写支付验证码" v-model="hy_sms">
+      <view class="sms_input">
+        <input
+          class="price_font"
+          maxlength="6"
+          type="text"
+          placeholder="填写支付验证码"
+          v-model="hy_sms"
+        />
       </view>
-        <view class="smspay_btn flex_center" @tap="hyPayOk">确认支付</view>
+      <view class="smspay_btn flex_center" @tap="hyPayOk">确认支付</view>
     </view>
   </view>
 </template>
@@ -172,6 +180,7 @@ export default {
       bank_id: 0,
       hy_box: false,
       hy_sms: "",
+      user: {},
     };
   },
   onLoad(options) {
@@ -187,90 +196,179 @@ export default {
       this.checkOrder();
     }, 1000);
     this.getConfig();
+    this.getUser();
   },
   methods: {
-    chooseBank(bank_id){
-      this.bank_id = bank_id
-    },
-    hyPayOk(){
-      if(this.hy_sms.length < 1){
+    pay() {
+      if (this.config.pay_sta == 0) {
         Taro.showToast({
-          title: "请填写支付验证码",
+          title: "系统维护中 暂时无法支付",
           icon: "none",
         });
-        return
+        return;
       }
-      Taro.request({
-        url: serverUrl + "/heepay/dopay",
-        data: {
-          token: this.token,
-          oid: this.oid,
-          sms: this.hy_sms
-        },
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-        }else{
-          Taro.showToast({
-            title: res.data.errmsg,
-            icon: "none",
-          });
-          return
-        }
-      });
-    },
-    hyPay(){
-      if(this.bank_id == 0){
+      if (this.pay_type == 0) {
         Taro.showToast({
-          title: "请选择付款银行卡",
+          title: "请选择支付方式",
           icon: "none",
         });
-        return
+        return;
       }
-      Taro.request({
-        url: serverUrl + "/heepay/webpay",
-        data: {
-          token: this.token,
-          bank_id: this.bank_id,
-          oid: this.oid,
-        },
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          this.hy_pay = false
-          this.hy_box = true
-        }else{
+      if (this.pay_type == 3) {
+        window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
+        return;
+      } else if (this.pay_type == 2) {
+        window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
+        return;
+      } else if (this.pay_type == 4) {
+        if (this.user.user_uid == 0) {
           Taro.showToast({
-            title: res.data.errmsg,
+            title: "请先开通钱包账户",
             icon: "none",
           });
-          return
-        }
-      });
-    },
-    getBank() {
-      Taro.request({
-        url: serverUrl + "/userapi/banklist",
-        data: {
-          token: this.token,
-        },
-      }).then((res) => {
-        if (res.data.errcode == 0) {
-          if(res.data.data.length > 0){
-            this.banklist = res.data.data;
-            this.hy_pay = true
-          }else{
-            Taro.showToast({
-              title: "请先进行银行卡签约",
-              icon: "none",
-            });
-            setTimeout(() => {
-              Taro.navigateTo({
-                url: "/pages/banklist/banklist",
+          setTimeout(() => {
+            this.goHee();
+          }, 1000);
+          return;
+        } else {
+          Taro.request({
+            url: serverUrl + "/heepay/applypay",
+            data: {
+              oid: this.oid,
+            },
+          }).then((res) => {
+            if (res.data.result_code == "SUCCESS") {
+              window.location.href = res.data.redirect_url;
+              return
+            } else {
+              Taro.showToast({
+                title: res.data.return_msg,
+                icon: "none",
               });
-            }, 500);
+              return;
+            }
+          });
+        }
+      } else {
+        if (process.env.TARO_ENV === "h5") {
+          if (this.inWeixin) {
+            //在微信内部
+            window.location.href = serverUrl + "/wxpay/index?oid=" + this.oid;
+          } else {
+            Taro.request({
+              url: serverUrl + "/wxpay/mpay",
+              data: {
+                oid: this.oid,
+              },
+            }).then((res) => {
+              if (res.data.errcode == 0) {
+                window.location.href = res.data.mwebUrl;
+              } else {
+                Taro.showToast({
+                  title: res.data.errmsg,
+                  icon: "none",
+                });
+                return;
+              }
+            });
           }
         }
+      }
+    },
+    goHee() {
+      Taro.request({
+        url: serverUrl + "/heepay/open",
+        data: {
+          uid: this.user.uid,
+        },
+      }).then((res) => {
+        if (res.data.result_code == "SUCCESS") {
+          window.location.href = res.data.redirect_url;
+        }
       });
     },
+    // chooseBank(bank_id){
+    //   this.bank_id = bank_id
+    // },
+    // hyPayOk(){
+    //   if(this.hy_sms.length < 1){
+    //     Taro.showToast({
+    //       title: "请填写支付验证码",
+    //       icon: "none",
+    //     });
+    //     return
+    //   }
+    //   Taro.request({
+    //     url: serverUrl + "/heepay/dopay",
+    //     data: {
+    //       token: this.token,
+    //       oid: this.oid,
+    //       sms: this.hy_sms
+    //     },
+    //   }).then((res) => {
+    //     if (res.data.errcode == 0) {
+    //     }else{
+    //       Taro.showToast({
+    //         title: res.data.errmsg,
+    //         icon: "none",
+    //       });
+    //       return
+    //     }
+    //   });
+    // },
+    // hyPay(){
+    //   if(this.bank_id == 0){
+    //     Taro.showToast({
+    //       title: "请选择付款银行卡",
+    //       icon: "none",
+    //     });
+    //     return
+    //   }
+    //   Taro.request({
+    //     url: serverUrl + "/heepay/webpay",
+    //     data: {
+    //       token: this.token,
+    //       bank_id: this.bank_id,
+    //       oid: this.oid,
+    //     },
+    //   }).then((res) => {
+    //     if (res.data.errcode == 0) {
+    //       this.hy_pay = false
+    //       this.hy_box = true
+    //     }else{
+    //       Taro.showToast({
+    //         title: res.data.errmsg,
+    //         icon: "none",
+    //       });
+    //       return
+    //     }
+    //   });
+    // },
+    // getBank() {
+    //   Taro.request({
+    //     url: serverUrl + "/userapi/banklist",
+    //     data: {
+    //       token: this.token,
+    //     },
+    //   }).then((res) => {
+    //     if (res.data.errcode == 0) {
+    //       if(res.data.data.length > 0){
+    //         this.banklist = res.data.data;
+    //         this.hy_pay = true
+    //       }else{
+    //         Taro.showToast({
+    //           title: "请先进行银行卡签约",
+    //           icon: "none",
+    //         });
+    //         setTimeout(() => {
+    //           Taro.navigateTo({
+    //             url: "/pages/banklist/banklist",
+    //           });
+    //         }, 500);
+    //       }
+    //     }
+    //   });
+    // },
     agree() {
       this.agree_sta = !this.agree_sta;
     },
@@ -283,6 +381,18 @@ export default {
       }).then((res) => {
         if (res.data.errcode == 0) {
           this.config = res.data.data;
+        }
+      });
+    },
+    getUser() {
+      Taro.request({
+        url: serverUrl + "/userapi/userinfo",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.user = res.data.user;
         }
       });
     },
@@ -355,56 +465,7 @@ export default {
         return false;
       }
     },
-    pay() {
-      if (this.config.pay_sta == 0) {
-        Taro.showToast({
-          title: "系统维护中 暂时无法支付",
-          icon: "none",
-        });
-        return;
-      }
-      if (this.pay_type == 0) {
-        Taro.showToast({
-          title: "请选择支付方式",
-          icon: "none",
-        });
-        return;
-      }
-       if (this.pay_type == 3) {
-        window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
-        return;
-      } else if (this.pay_type == 2) {
-        window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
-        this.getBank();
-      } else if (this.pay_type == 4) {
-        this.getBank();
-      } else {
-        if (process.env.TARO_ENV === "h5") {
-          if (this.inWeixin) {
-            //在微信内部
-            window.location.href = serverUrl + "/wxpay/index?oid=" + this.oid;
-          } else {
 
-            Taro.request({
-              url: serverUrl + "/wxpay/mpay",
-              data: {
-                oid: this.oid,
-              },
-            }).then((res) => {
-              if (res.data.errcode == 0) {
-                window.location.href = res.data.mwebUrl;
-              } else {
-                Taro.showToast({
-                  title: res.data.errmsg,
-                  icon: "none",
-                });
-                return;
-              }
-            });
-          }
-        }
-      }
-    },
     getOrder() {
       Taro.request({
         url: serverUrl + "/userapi/getorder",

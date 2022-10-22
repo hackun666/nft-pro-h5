@@ -27,8 +27,6 @@ export default {
     return {
       user: {},
       token: getToken(),
-      default_bg:
-        "https://dundunimg.oss-cn-zhangjiakou.aliyuncs.com/2022/7/7/ossb795b2c8-a122-1603-fe41-7d16fcadcaed.webp",
       show: false,
       imgWidth: 0,
       imgHeight: 0,
@@ -101,7 +99,7 @@ export default {
     getImgInfo() {
       let self = this;
       let img = new Image();
-      img.src = 'https://dundunimg.oss-cn-zhangjiakou.aliyuncs.com/2022/7/9/oss651155e4-2a37-e0b3-bd3b-5ab75fa5a97c.jpg',//this.config.refer_img;
+      img.src = this.config.refer_img;
       console.log(img);
       img.onload = function () {
         self.imgWidth = img.width;
@@ -140,22 +138,6 @@ export default {
         vm.drawCanvasqrImg(canvas, ctx, dpr);
       };
     },
-    // drawCoverImg(canvas, ctx, dpr) {
-    //   console.log("绘制封面");
-    //   var vm = this;
-    //   var imgX = 0; //图片X开始坐标
-    //   var imgY = 0; //图片Y开始坐标
-    //   var imgWidth = 800;
-    //   var imgHeight = 800;
-    //   var img = new Image();
-    //   img.crossOrigin = ""; //死坑的图片跨域 （img.crossOrigin = "Anonymous"这种写法还是不能显示base64格式图片）
-    //   img.src = 'https://dundunimg.oss-cn-zhangjiakou.aliyuncs.com/2022/7/9/oss651155e4-2a37-e0b3-bd3b-5ab75fa5a97c.jpg',//this.config.refer_img; //背景图
-    //   img.onload = function () {
-    //     ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
-    //     ctx.restore(); // 还原状态
-    //     vm.drawCanvasqrImg(canvas, ctx, dpr);
-    //   };
-    // },
     // 绘制二维码
     drawCanvasqrImg: function (canvas, ctx, dpr) {
       console.log("绘制二维码");
@@ -172,7 +154,7 @@ export default {
         ctx.restore(); // 还原状态
         // vm.canvasFillPin(canvas, ctx, dpr);
 
-        
+
         vm.convertCanvasToImage(canvas);
       };
     },
