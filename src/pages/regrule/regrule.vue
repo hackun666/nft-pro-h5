@@ -1,6 +1,6 @@
 <template>
   <view class="main">
-    <Navbar title="注册协议" />
+    <Navbar title="用户协议" />
     <view class="xieyi">
       <rich-text :nodes="config.agreement"></rich-text>
     </view>

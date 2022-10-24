@@ -83,7 +83,7 @@
         <view class="chain_row">
           <view class="chain_label">转售人地址</view>
           <view class="chain_val flex_start">
-            <text class="hash" @tap="copyTxt(holder.address)">{{ holder.address }}</text>
+            <text class="hash">{{ holder.address }}</text>
           </view>
         </view>
       </view>
@@ -94,13 +94,13 @@
         <view class="chain_row">
           <view class="chain_label">区块链地址</view>
           <view class="chain_val flex_start">
-            <text class="hash" @tap="copyTxt(info.class_id)">{{ info.class_id }}</text>
+            <text class="hash el">{{ info.class_id }}</text>
           </view>
         </view>
         <view class="chain_row">
           <view class="chain_label">交易哈希</view>
           <view class="chain_val flex_start">
-            <text class="hash" @tap="copyTxt(info.tx_hash)">{{ info.tx_hash }}</text>
+            <text class="hash el">{{ info.tx_hash }}</text>
           </view>
         </view>
       </view>

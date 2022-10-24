@@ -78,14 +78,14 @@
             />
             <text>汇元钱包</text>
           </view>
-          <view class="u_nav_item" @tap="goPage('/pages/cashlog/cashlog')">
+          <!-- <view class="u_nav_item" @tap="goPage('/pages/cashlog/cashlog')">
             <image
               class="u_nav_ico"
               src="../../assets/img/cashlog.svg"
               mode="widthFix"
             />
             <text>账户明细</text>
-          </view>
+          </view> -->
           <view class="u_nav_item" @tap="goPage('/pages/combolist/combolist')">
             <image
               class="u_nav_ico"
