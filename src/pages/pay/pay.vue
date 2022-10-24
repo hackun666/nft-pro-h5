@@ -18,7 +18,7 @@
       </view>
       <view class="o_card">
         <view class="info_title">选择支付方式</view>
-        <view class="pay_choose">
+        <!-- <view class="pay_choose">
           <view class="pay_row" @tap="choosePay(1)">
             <image
               class="pay_ico"
@@ -37,7 +37,7 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view>
+          </view> -->
           <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
             <image
               class="pay_ico"
@@ -58,7 +58,7 @@
             />
           </view>
 
-          <view class="pay_row" @tap="choosePay(3)">
+          <!-- <view class="pay_row" @tap="choosePay(3)">
             <image
               class="pay_ico"
               src="../../assets/img/shande.svg"
@@ -76,7 +76,7 @@
               src="../../assets/img/unchk.svg"
               mode="widthFix"
             />
-          </view>
+          </view> -->
 
           <view class="pay_row" @tap="choosePay(4)">
             <image
@@ -102,7 +102,7 @@
       <view class="rz_btn flex_center" @tap="pay">确定支付</view>
     </view>
 
-    <view class="mask" v-if="hy_pay" @tap="hy_pay = false"></view>
+    <!-- <view class="mask" v-if="hy_pay" @tap="hy_pay = false"></view>
     <view class="hy_pay" v-if="hy_pay">
       <view class="info_tit">选择银行卡</view>
       <view class="bank_list">
@@ -145,7 +145,7 @@
         />
       </view>
       <view class="smspay_btn flex_center" @tap="hyPayOk">确认支付</view>
-    </view>
+    </view> -->
   </view>
 </template>
 
