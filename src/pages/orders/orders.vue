@@ -27,18 +27,23 @@
         >已取消</view
       >
     </view>
-    <view class="info_box2">
+    <view class="info_box">
       <view class="order_list" v-if="orders.length > 0">
         <view class="order_item" v-for="(order, index) in orders" :key="index">
           <view class="order_item_top">
             <view class="author_bar">订单号:{{ order.order_no }}</view>
             <view class="order_staus dfk" v-if="order.status == 0">待付款</view>
             <view class="order_staus ywc" v-if="order.status == 1">已完成</view>
-            <view class="order_staus ywc" v-if="order.status == 2">已取消</view>
+            <view class="order_staus yqx" v-if="order.status == 2">已取消</view>
           </view>
 
           <view class="order_info flex_start" @tap="goOrderInfo(order.id)">
-            <image class="work_thumb" :src="order.cover" mode="aspectFit" />
+            <image
+              class="work_thumb"
+              v-if="order.cover"
+              :src="order.cover"
+              mode="aspectFit"
+            />
             <view class="work_data">
               <view class="title el2">{{ order.title }}</view>
               <view class="buy_num"
@@ -52,7 +57,7 @@
               </view>
             </view>
             <view class="order_price"
-              >￥<text class="big price_font">{{ order.fee }}</text></view
+              >￥<text class="big">{{ order.fee }}</text></view
             >
           </view>
           <view class="order_btns" v-if="order.status == 0">
@@ -63,7 +68,7 @@
       </view>
       <view class="no_result" v-else>
         <image
-          src="../../assets/img/no_data.png"
+          src="../../assets/img/no_result.svg"
           mode="widthFix"
           class="no_result_img"
         />

@@ -1,7 +1,7 @@
 <template>
   <view class="main">
     <Navbar title="订单详情" />
-    <view class="info_box2">
+    <view class="info_box">
       <view class="order_sta" v-if="order.status == 0">待支付订单</view>
       <view class="order_sta" v-if="order.status == 1">订单已完成</view>
       <view class="order_sta" v-if="order.status == 2">订单已取消</view>
@@ -22,12 +22,17 @@
           </view>
         </view> -->
         <view class="order_info flex_start">
-          <image class="work_thumb" :src="order.cover" mode="widthFix" />
+          <image
+            class="work_thumb"
+            v-if="order.cover"
+            :src="order.cover"
+            mode="widthFix"
+          />
           <view class="work_data">
             <view class="title ek">{{ order.title }}</view>
           </view>
           <view class="order_price"
-            >￥<text class="big price_font">{{ order.fee }}</text></view
+            >￥<text class="big">{{ order.fee }}</text></view
           >
         </view>
       </view>
@@ -45,12 +50,6 @@
             <text class="hash el">{{ order.title }}</text>
           </view>
         </view>
-        <view class="chain_row" v-if="info.company">
-          <view class="chain_label">藏品发行方</view>
-          <view class="chain_val flex_start">
-            <text class="hash el">{{ info.company }}</text>
-          </view>
-        </view>
         <view class="chain_row">
           <view class="chain_label">下单时间</view>
           <view class="chain_val flex_start">
@@ -64,7 +63,6 @@
           </view>
         </view>
       </view>
-
 
       <view class="rz_btn flex_center" v-if="order.status == 0" @tap="goPay"
         >去支付</view
@@ -102,7 +100,6 @@ export default {
     this.getUser();
   },
   methods: {
-
     copyTxt(txt) {
       Taro.setClipboardData({
         data: txt,

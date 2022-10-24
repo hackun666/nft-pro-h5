@@ -179,7 +179,7 @@
           class="tx_input"
           v-model="cash"
           type="text"
-          placeholder="最低提现金额为1.00元"
+          placeholder="最低提现金额为50.00元"
         />
         <text class="tx_all" @tap="tx_all">全部提现</text>
       </view>
@@ -233,6 +233,7 @@ export default {
         return;
       }
       if (this.btn_sta) {
+        this.btn_sta = false;
         if(this.pay_type == 2){
           window.location.href =
           serverUrl +
@@ -287,13 +288,19 @@ export default {
           });
         }
 
+      }else{
+        Taro.showToast({
+          title: "支付处理中，请刷新页面重试",
+          icon: "none",
+          duration: 2000,
+        });
       }
     },
     savetx() {
-      if (this.user.cash >= 1) {
-        if (this.cash < 1) {
+      if (this.user.cash >= 50) {
+        if (this.cash < 50) {
           Taro.showToast({
-            title: "提现金额不能小于1元",
+            title: "提现金额不能小于50元",
             icon: "none",
             duration: 2000,
           });
