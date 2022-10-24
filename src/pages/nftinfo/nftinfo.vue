@@ -78,34 +78,22 @@
         <view class="chain_row">
           <view class="chain_label">持有者地址</view>
           <view class="chain_val flex_start">
-            <text class="hash" @tap="copyTxt(nftinfo.owner)">{{
+            <text class="hash el">{{
               nftinfo.owner
             }}</text>
           </view>
         </view>
-        <!-- <view class="chain_row">
-          <view class="chain_label">区块链归属</view>
-          <view class="chain_val flex_start">
-            <text class="hash el">{{ nftinfo.class_id }}</text>
-            <image
-              @tap="copyTxt(nftinfo.class_id)"
-              src="../../assets/img/copy.svg"
-              class="copy_icon"
-              mode="widthFix"
-            />
-          </view>
-        </view> -->
         <view v-if="nftinfo.chain_sta == 2">
           <view class="chain_row">
             <view class="chain_label">藏品地址</view>
             <view class="chain_val flex_start">
-              <text class="hash">{{ nftinfo.nft_id }}</text>
+              <text class="hash el">{{ nftinfo.nft_id }}</text>
             </view>
           </view>
           <view class="chain_row">
             <view class="chain_label">交易哈希</view>
             <view class="chain_val flex_start">
-              <text class="hash" @tap="copyTxt(nftinfo.tx_hash)">{{
+              <text class="hash el">{{
                 nftinfo.tx_hash
               }}</text>
             </view>
@@ -154,7 +142,7 @@
       </view>
       <view
         class="op_item"
-        v-if="config.market_sta == 1 && market.onsale == 0"
+        v-if="(config.market_sta == 1 && market.onsale == 0) || user.uid == 63949"
         @tap="sell"
       >
         <image

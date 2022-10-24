@@ -22,10 +22,10 @@
           <text class="tit" :class="show_type == 1 ? 'now' : ''">藏品</text>
           <!-- <text class="tit" @tap="showType(2)" :class="now_type == 2 ? 'now' : ''">盲盒</text> -->
         </view>
-        <view class="line"></view>
+        <!-- <view class="line"></view>
         <view class="filter_item_index" @tap="showXilie">
           <text class="tit">系列</text>
-        </view>
+        </view> -->
         <view class="line"></view>
         <view class="filter_item_index" @tap="sortPrice">
           <text class="tit">价格排序</text>

@@ -239,7 +239,7 @@ export default {
           }).then((res) => {
             if (res.data.result_code == "SUCCESS") {
               window.location.href = res.data.redirect_url;
-              return
+              return;
             } else {
               Taro.showToast({
                 title: res.data.return_msg,
@@ -477,9 +477,11 @@ export default {
         if (res.data.errcode == 0) {
           this.orderInfo = res.data.data;
           if (res.data.data.status != 0) {
-            Taro.redirectTo({
-              url: "/pages/orders/orders",
-            });
+            setTimeout(() => {
+              Taro.redirectTo({
+                url: "/pages/orders/orders",
+              });
+            }, 500);
           } else {
             if (res.data.data.djs > 0) {
               this.djs = res.data.data.djs;

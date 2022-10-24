@@ -112,12 +112,12 @@
             <view class="chain_label">交易哈希</view>
             <view class="chain_val flex_start">
               <text class="hash el">{{ info.tx_hash }}</text>
-              <image
+              <!-- <image
                 @tap="copyTxt(info.tx_hash)"
                 src="../../assets/img/copy.svg"
                 class="copy_icon"
                 mode="widthFix"
-              />
+              /> -->
             </view>
           </view>
         </view>
