@@ -27,7 +27,7 @@
             <view class="title ek">{{ order.title }}</view>
           </view>
           <view class="order_price"
-            >￥<text class="big">{{ order.fee }}</text></view
+            >￥<text class="big price_font">{{ order.fee }}</text></view
           >
         </view>
       </view>
@@ -64,7 +64,7 @@
           </view>
         </view>
       </view>
-      
+
 
       <view class="rz_btn flex_center" v-if="order.status == 0" @tap="goPay"
         >去支付</view
@@ -102,7 +102,7 @@ export default {
     this.getUser();
   },
   methods: {
-    
+
     copyTxt(txt) {
       Taro.setClipboardData({
         data: txt,

@@ -27,7 +27,7 @@
         </view>
         <view class="u_info">
           <view class="nickname">
-            <view class="name price_font">{{ user.nickname }}</view>
+            <view class="name">{{ user.nickname }}</view>
             <image
               src="../../assets/img/edit_info.svg"
               class="edit_info"
@@ -36,18 +36,18 @@
             />
           </view>
 
-          <view class="address price_font">注册手机号：{{ user.mobile }}</view>
+          <!-- <view class="address price_font">注册手机号：{{ user.mobile }}</view> -->
           <view class="address price_font">
             <text class="address_hash el price_font" v-if="user.address"
               >钱包地址：{{ user.address }}</text
             >
-            <image
+            <!-- <image
               v-if="user.address"
               @tap="copyTxt(user.address)"
               src="../../assets/img/copy.svg"
               class="copy_icon"
               mode="widthFix"
-            />
+            /> -->
           </view>
         </view>
       </view>
@@ -62,14 +62,14 @@
             />
             <text>我的订单</text>
           </view>
-          <!-- <view class="u_nav_item" @tap="goPage('/pages/balance/balance')">
+          <view class="u_nav_item" @tap="goPage('/pages/balance/balance')">
             <image
               class="u_nav_ico"
-              src="../../assets/img/cash.svg"
+              src="../../assets/img/cash2.svg"
               mode="widthFix"
             />
             <text>我的账户</text>
-          </view> -->
+          </view>
           <view class="u_nav_item" @tap="goHee">
             <image
               class="u_nav_ico"

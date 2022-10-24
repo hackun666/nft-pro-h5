@@ -7,20 +7,20 @@
           class="box_tab_item"
           :class="now_tab == 0 ? 'on' : ''"
           @tap="switchTab(0)"
-          >未售卖</view
+          >未寄售</view
         >
         <view class="line_a"></view>
         <view
           class="box_tab_item"
           :class="now_tab == 1 ? 'on' : ''"
           @tap="switchTab(1)"
-          >售卖中</view
+          >寄售中</view
         >
       </view>
       <view class="my_nft_list" v-if="list.length > 0">
         <view class="my_nft_list_item" v-for="item in list" :key="item.id" @tap="goNftInfo(item.id)">
           <view class="market_price" v-if="now_tab == 1"
-            >挂售价格：&yen;{{ item.market.price }}</view
+            >寄售价格：&yen;{{ item.market.price }}</view
           >
           <image class="my_nft_item_img" :src="item.uri" mode="aspectFill"/>
           <view class="my_nft_item_info">

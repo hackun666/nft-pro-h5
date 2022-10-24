@@ -52,7 +52,7 @@
               </view>
             </view>
             <view class="order_price"
-              >￥<text class="big">{{ order.fee }}</text></view
+              >￥<text class="big price_font">{{ order.fee }}</text></view
             >
           </view>
           <view class="order_btns" v-if="order.status == 0">
