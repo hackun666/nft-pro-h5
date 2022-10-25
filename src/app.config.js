@@ -45,6 +45,7 @@ export default {
     "pages/salelist/salelist",
     "pages/xilie/xilie",
     "pages/banklist/banklist",
+    "pages/tradelog/tradelog",
   ],
   window: {
     backgroundTextStyle: "dark",

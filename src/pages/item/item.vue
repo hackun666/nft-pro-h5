@@ -74,16 +74,16 @@
 
       <view class="chain_info card">
         <view class="info_title">转售人信息</view>
-        <view class="chain_row">
+        <!-- <view class="chain_row">
           <view class="chain_label">转售人昵称</view>
           <view class="chain_val flex_start">
             <text class="hash">{{ holder.nickname }}</text>
           </view>
-        </view>
+        </view> -->
         <view class="chain_row">
           <view class="chain_label">转售人地址</view>
           <view class="chain_val flex_start">
-            <text class="hash">{{ holder.address }}</text>
+            <text class="hash el">{{ holder.address }}</text>
           </view>
         </view>
       </view>
