@@ -87,7 +87,7 @@
             <view class="good_title el">{{ item.title }}</view>
             <view class="good_meta">
               <view class="u_num" v-if="item.nft_type == 1"
-                >编号 #{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
+                >#{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
               >
               <view class="u_num" v-if="item.nft_type == 2">盲盒</view>
               <view class="price"
@@ -130,7 +130,7 @@ export default {
       loading: false,
       loadAll: false,
       sort_price: 0,
-      sort_time: 1,
+      sort_time: 0,
       good_list: [],
       page: 1,
     };
