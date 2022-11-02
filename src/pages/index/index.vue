@@ -98,13 +98,15 @@
         <view class="no_result_text">敬请期待</view>
       </view>
     </view>
-
     <view class="rz_bar flex_start" v-if="user && user.rz_sta == 0">
       <view class="text">实名认证后才能购买数字藏品</view>
       <view class="rz_go flex_center" @tap="goPage('/pages/verify/verify')"
         >去认证</view
       >
     </view>
+
+
+
     <Chain />
     <footerBar />
   </view>
