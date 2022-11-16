@@ -7,6 +7,10 @@
         <view class="nav_title">{{title}}</view>
         <view class="right_nav"></view>
     </view>
+    <view class="backHome" v-if="path != '/pages/index/index'" @tap="goHome">
+      <image class="icon" src="../assets/img/gohome.svg" mode="widthFix"/>
+      <text>首页</text>
+    </view>
   </view>
 </template>
 
@@ -16,12 +20,17 @@ import "./navbar.less";
 export default {
 props: ["title"],
   data() {
-    return { 
+    return {
       env: process.env.TARO_ENV,
+      path: '',
     };
   },
-  computed: {},
+  computed: {
+
+  },
   created() {
+    let page = Taro.getCurrentInstance();
+    this.path = page.router.path.replace(/(\?|#)[^'"]*/, "");
   },
   methods: {
     goBack(){
@@ -34,8 +43,13 @@ props: ["title"],
           delta: 1,
         })
       }
-      
-    }
+
+    },
+    goHome() {
+      Taro.navigateTo({
+          url: "/pages/index/index"
+        })
+    },
   },
 };
 </script>

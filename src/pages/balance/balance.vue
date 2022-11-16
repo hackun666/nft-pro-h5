@@ -58,7 +58,7 @@
             mode="widthFix"
           />
         </view> -->
-        <view class="pay_row" @tap="choosePay(2)">
+        <!-- <view class="pay_row" @tap="choosePay(2)">
           <image
             class="pay_ico"
             src="../../assets/img/alipay.svg"
@@ -76,7 +76,7 @@
             src="../../assets/img/unchk.svg"
             mode="widthFix"
           />
-        </view>
+        </view> -->
         <view class="pay_row" @tap="choosePay(3)">
           <image
             class="pay_ico"
@@ -114,7 +114,7 @@
     <view class="tx_form" v-if="tx_box">
       <view class="info_title">选择提现方式</view>
       <view class="pay_choose">
-        <view class="pay_row" @tap="choosePay(1)">
+        <!-- <view class="pay_row" @tap="choosePay(1)">
           <image
             class="pay_ico"
             src="../../assets/img/wechat.svg"
@@ -132,8 +132,8 @@
             src="../../assets/img/unchk.svg"
             mode="widthFix"
           />
-        </view>
-        <view class="pay_row" @tap="choosePay(2)">
+        </view> -->
+        <!-- <view class="pay_row" @tap="choosePay(2)">
           <image
             class="pay_ico"
             src="../../assets/img/alipay.svg"
@@ -151,7 +151,7 @@
             src="../../assets/img/unchk.svg"
             mode="widthFix"
           />
-        </view>
+        </view> -->
         <view class="pay_row" @tap="choosePay(3)">
           <image
             class="pay_ico"
