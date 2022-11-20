@@ -2,7 +2,7 @@
   <view class="main">
     <Navbar title="出售记录" />
     <view class="info_box">
-      
+
       <view class="order_list" v-if="trade_log.length > 0">
         <view class="order_item" v-for="item in trade_log" :key="item.id">
           <view class="order_item_top">
@@ -20,7 +20,7 @@
           </view>
 
           <view class="order_dsp">
-            <view class="buyer">买家手机号：{{ hidePhone(item.buyer.mobile) }}</view>
+            <!-- <view class="buyer">买家手机号：{{ hidePhone(item.buyer.mobile) }}</view> -->
             <view class="buyer">交易时间：{{ formatDate(item.time) }}</view>
           </view>
         </view>
@@ -96,13 +96,13 @@ export default {
         }, 500);
       }
     },
-    
+
     switchNav(nav) {
       this.type = nav;
       this.page = 1;
       this.loading = false;
       this.loadAll = false;
-      this.trade_log = []; 
+      this.trade_log = [];
       this.getOrders();
     },
     getOrders() {

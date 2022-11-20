@@ -339,7 +339,7 @@ export default {
         });
       } else {
         Taro.showToast({
-          title: "账户金额不足1元无法提现",
+          title: "账户金额不足50元无法提现",
           icon: "none",
           duration: 2000,
         });
