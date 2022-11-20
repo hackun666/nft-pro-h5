@@ -38,7 +38,7 @@
               mode="widthFix"
             />
           </view> -->
-        <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
+        <!-- <view class="pay_row" v-if="!inWeixin" @tap="choosePay(2)">
           <image
             class="pay_ico"
             src="../../assets/img/alipay.svg"
@@ -56,7 +56,7 @@
             src="../../assets/img/unchk.svg"
             mode="widthFix"
           />
-        </view>
+        </view> -->
 
         <!-- <view class="pay_row" @tap="choosePay(3)">
             <image
@@ -276,10 +276,10 @@ export default {
         return;
       }
       if (this.pay_type == 3) {
-        window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
+        // window.location.href = serverUrl + "/api/sandpay?id=" + this.oid;
         return;
       } else if (this.pay_type == 2) {
-        window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
+        // window.location.href = serverUrl + "/wxpay/alipaywap?oid=" + this.oid;
         return;
       } else if (this.pay_type == 5) {
         this.passcheck();
