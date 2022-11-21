@@ -36,7 +36,7 @@
               <view class="open_btn opened" v-if="item.open_sta == 1"
                 >已拆开</view
               >
-              <view
+              <!-- <view
                 class="open_btn"
                 v-if="item.open_sta == 0 && item.onsale == 0 && item.info.trans_sta == 1"
                 @tap="send(item.id)"
@@ -61,7 +61,7 @@
                 "
                 @tap="xiajia(item.id)"
                 >下架</view
-              >
+              > -->
             </view>
           </view>
         </view>
@@ -192,7 +192,7 @@ export default {
             icon: "success",
           });
           this.sell_box = false;
-          this.getData();
+          this.switchTab(1);
         } else {
           Taro.showToast({
             title: res.data.errmsg,
@@ -223,7 +223,7 @@ export default {
             icon: "success",
           });
           this.sell_box = false;
-          this.getData();
+          this.switchTab(1);
         } else {
           Taro.showToast({
             title: res.data.errmsg,
@@ -262,7 +262,7 @@ export default {
               icon: "none",
               duration: 2000,
             });
-            this.getData();
+          this.switchTab(1);
           }, 3000);
         } else {
           Taro.showToast({
