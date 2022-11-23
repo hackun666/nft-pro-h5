@@ -21,6 +21,13 @@
           class="login_form_ipt price_font"
         />
       </view>
+      <view
+        id="__nc"
+        v-show="captcha_sta"
+        style="width: 100%; margin-bottom: 20px"
+      >
+        <view id="nc"></view>
+      </view>
       <view class="login_form_row">
         <image
           class="form_ico"
@@ -121,28 +128,119 @@ export default {
       env: process.env.TARO_ENV,
       config: null,
       agree_sta: false,
-
+      show_num: [],
+      identifyCode: "",
+      ncShow: true, //人机校验显示隐藏
+      nc_DataArr: {},
+      code_form: null,
+      logVal: 1,
+      captcha_sta: false,
     };
   },
   onLoad(options) {
     this.getConfig();
-    if(options.ref_code){
-      this.ref_code = options.ref_code
-      Taro.setStorageSync('ref_code', options.ref_code);
-    }else{
-      if(Taro.getStorageSync('ref_code')){
-        this.ref_code = Taro.getStorageSync('ref_code');
+    if (options.ref_code) {
+      this.ref_code = options.ref_code;
+      Taro.setStorageSync("ref_code", options.ref_code);
+    } else {
+      if (Taro.getStorageSync("ref_code")) {
+        this.ref_code = Taro.getStorageSync("ref_code");
       }
     }
   },
   methods: {
-    
+    check() {
+      let that = this;
+      // 实例化nc
+      const nc_token = [
+        "FFFF0N0000000000B157",
+        new Date().getTime(),
+        Math.random(),
+      ].join(":");
+      const nc = NoCaptcha.init({
+        renderTo: "#nc",
+        appkey: "FFFF0N0000000000B157",
+        scene: "nc_login_h5",
+        token: nc_token,
+        trans: { key1: "code200" },
+        elementID: ["usernameID"],
+        is_Opt: 0,
+        language: "cn",
+        timeout: 10000,
+        retryTimes: 5,
+        errorTimes: 5,
+        inline: false,
+        apimap: {
+          // 'analyze': '//a.com/nocaptcha/analyze.jsonp',
+          // 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
+        },
+        bannerHidden: false,
+        initHidden: false,
+        callback: function (data) {
+          console.log("data:", data);
+          // data.nc_token = nc_token
+          // data.scene = 'nc_message_h5'
+
+          that.code_form = {
+            captchaType: "scoreOffline",
+            nc_token: nc_token,
+            phoneNumber: this.phone,
+            scene: "nc_login_h5",
+            sessionId: data.csessionid,
+            sig: data.sig,
+          };
+
+          that.reSendCode();
+          // console.log(data)
+          // window.console && console.log('nc_token：' + nc_token)
+          // window.console && console.log('csessionid：' + data.csessionid)
+          // window.console && console.log('sig：' + data.sig)
+        },
+        error: function (s) {},
+      });
+      NoCaptcha.setEnabled(true);
+      nc.reset(); //请务必确保这里调用一次reset()方法
+      that.captcha_sta = true;
+      NoCaptcha.upLang("cn", {
+        LOADING: "加载中...", //加载
+        SLIDER_LABEL: "请向右滑动验证", //等待滑动
+        CHECK_Y: "验证通过", //通过
+        ERROR_TITLE: "非常抱歉，这出错了...", //拦截
+        CHECK_N: "验证未通过", //准备唤醒二次验证
+        OVERLAY_INFORM: "经检测你当前操作环境存在风险，请输入验证码", //二次验证
+        TIPS_TITLE: "验证码错误，请重新输入", //验证码输错时的提示
+      });
+    },
+    reSendCode() {
+      console.log(this.code_form);
+
+      Taro.request({
+        url: serverUrl + "/api/captcha",
+        data: {
+          is_reg: 1,
+          phone: this.phone,
+          nc_token: this.code_form.nc_token,
+          code_form: this.code_form,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.sendcode();
+        } else {
+          Taro.showToast({
+            title: res.data.errmsg,
+            icon: "none",
+            duration: 2000,
+          });
+          return;
+        }
+      });
+    },
     goPage(page) {
       Taro.navigateTo({
         url: page,
       });
     },
-    agree(){
+    agree() {
       this.agree_sta = !this.agree_sta;
     },
     getConfig() {
@@ -231,19 +329,18 @@ export default {
       });
     },
 
-     goBack(){
+    goBack() {
       if (window.history.length <= 1) {
         Taro.navigateTo({
-          url: "/pages/index/index"
-        })
+          url: "/pages/index/index",
+        });
       } else {
         Taro.navigateBack({
           delta: 1,
-        })
+        });
       }
-      
     },
-    getcode() {
+    sendcode() {
       var that = this;
       if (!this.isgetcode) {
         return;
@@ -264,19 +361,25 @@ export default {
         });
         return;
       }
+      if (!this.code_form) {
+        Taro.showToast({
+          title: "请先进行验证",
+          icon: "none",
+          duration: 2000,
+        });
+        return;
+      }
       that.isgetcode = false;
       Taro.request({
-        url: serverUrl + "/api/getcode",
+        url: serverUrl + "/api/sendcode",
         data: {
           mobile: this.phone,
-        },
-        method: "POST",
-        dataType: "json",
-        header: {
-          "content-type": "application/x-www-form-urlencoded",
+          nc_token: this.code_form.nc_token,
         },
       }).then((res) => {
         if (res.data.errcode == 0) {
+          that.time = 0;
+          that.captcha_sta = false;
           that.codeid = res.data.codeid;
           let timecount = setInterval(() => {
             that.time++;
@@ -297,6 +400,30 @@ export default {
           });
         }
       });
+    },
+    getcode() {
+      if (!this.isgetcode) {
+        return;
+      }
+      if (this.phone.length < 1) {
+        Taro.showToast({
+          title: "请填写手机号",
+          icon: "none",
+          duration: 2000,
+        });
+        return;
+      }
+      if (!/^1[3456789]\d{9}$/.test(this.phone)) {
+        Taro.showToast({
+          title: "手机号码有误，请重新填写",
+          icon: "none",
+          duration: 2000,
+        });
+        return;
+      }
+      if (!this.captcha_sta) {
+        this.check();
+      }
     },
   },
 };
