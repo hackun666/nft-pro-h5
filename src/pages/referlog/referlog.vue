@@ -10,17 +10,17 @@
           :key="item.id"
         >
           <view class="refer_item_title">
-            <text class="n_tt el">用户昵称：{{ item.user.nickname }}</text>
+            <text class="n_tt el">用户昵称：{{ item.nickname }}</text>
           </view>
           <view class="refer_item_meta">
-            <text>注册手机号：{{ item.user.mobile }}</text>
+            <text>注册手机号：{{ item.mobile }}</text>
           </view>
           <view class="refer_item_meta">
-            <text>注册时间：{{ formatDate(item.user.reg_time) }}</text>
+            <text>注册时间：{{ formatDate(item.reg_time) }}</text>
           </view>
-          <view class="refer_item_meta">
+          <!-- <view class="refer_item_meta">
             <text>用户类型：{{item.is_real == 1?'有效用户':'无效用户'}}</text>
-          </view>
+          </view> -->
         </view>
       </view>
       <view class="no_result" v-else>
@@ -93,7 +93,7 @@ export default {
       }).then((res) => {
         if (res.data.errcode == 0) {
           this.user = res.data.user;
-          this.getConfig();
+          // this.getConfig();
         }
       });
     },

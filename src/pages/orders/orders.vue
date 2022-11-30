@@ -49,7 +49,7 @@
               <view class="buy_num"
                 >购买数量：<text class="big">×{{ order.buy_num }}</text></view
               >
-              <view v-if="order.status == 1">
+              <view v-if="order.status == 1 && order.order_type != 8">
                 <view class="order_up_sta" v-if="order.up_sta == 0"
                   >藏品发放中</view
                 >
