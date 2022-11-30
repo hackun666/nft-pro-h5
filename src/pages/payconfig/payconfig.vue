@@ -13,7 +13,7 @@
             />
           </view>
         </view>
-        <view class="pay_row">
+        <!-- <view class="pay_row">
           <view class="pay_row_label">微信号</view>
           <view class="pay_row_val">
             <input
@@ -22,7 +22,7 @@
               placeholder="请输入微信号"
             />
           </view>
-        </view>
+        </view> -->
         <view class="pay_row">
           <view class="pay_row_label">收款姓名</view>
           <view class="pay_row_val">
@@ -53,7 +53,6 @@
             />
           </view>
         </view>
-        <p class="red_tips">*温馨提示：需要同时提交三个收款信息</p>
         <view class="save_btn flex_center" @tap="savePayConfig">保存</view>
       </view>
     </view>
@@ -110,7 +109,7 @@ export default {
       });
     },
     savePayConfig() {
-      if(this.alipay_id.length < 1 || this.wechat_id.length < 1 || this.real_name.length < 1 || this.bank_name.length < 1 || this.bank_no.length < 1) {
+      if(this.alipay_id.length < 1 || this.real_name.length < 1 || this.bank_name.length < 1 || this.bank_no.length < 1) {
         Taro.showToast({
           title: "请先完善收款信息",
           icon: "none",
