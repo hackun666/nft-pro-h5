@@ -86,10 +86,6 @@
           <view class="good_info">
             <view class="good_title el">{{ item.title }}</view>
             <view class="good_meta">
-              <!-- <view class="u_num" v-if="item.nft_type == 1"
-                >{{ item.nftinfo.no }}/{{ item.nftinfo.max_no }}</view
-              >
-              <view class="u_num" v-if="item.nft_type == 2">盲盒</view> -->
               <view class="u_num">共{{ item.sale_num }}件寄售</view>
               <view class="price"
                 >&yen;<text class="big price_font">{{ item.price }}</text

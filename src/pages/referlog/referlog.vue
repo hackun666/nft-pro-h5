@@ -1,6 +1,7 @@
 <template>
   <view class="main">
     <Navbar title="邀请记录" />
+    <view class="log_btn" @tap="phb">邀请排行</view>
     <view class="info_box2">
       <view class="refer_list" v-if="list.length > 0">
         <view class="total_refer">您当前已邀请：{{list.length}}人</view>
@@ -59,6 +60,12 @@ export default {
     this.getData();
   },
   methods: {
+    phb(){
+      console.log(1)
+      Taro.navigateTo({
+        url: "/pages/rank/rank",
+      });
+    },
     checkAuth() {
       if (isLogined()) {
         Taro.request({

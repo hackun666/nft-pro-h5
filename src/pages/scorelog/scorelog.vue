@@ -1,19 +1,21 @@
 <template>
   <view class="main">
-    <Navbar title="邀请排行榜" />
+    <Navbar title="积分记录" />
     <view class="info_box2">
-      <view class="rank_list" v-if="list.length > 0">
-        <view class="rank_row">
-          <view class="no">排名</view>
-          <view class="mobile">手机号</view>
-          <view class="ref_num">拉新人数</view>
-          <!-- <view class="ref_num">有效人数</view> -->
-        </view>
-        <view class="rank_row" v-for="(item,index) in list" :key="item.uid">
-          <view class="no">{{index + 1}}</view>
-          <view class="mobile">{{hidePhone(item.mobile)}}</view>
-          <view class="ref_num">{{item.ref_num}}人</view>
-          <!-- <view class="ref_num">{{item.real_num}}人</view> -->
+      <view class="refer_list" v-if="list.length > 0">
+        <view class="total_refer">您当前积分数：{{user.score}}人</view>
+        <view
+          class="refer_item"
+          v-for="item in list"
+          :key="item.id"
+        >
+
+          <view class="refer_item_meta">
+            <text>积分数：{{item.type == 1 ? '增加' : '减少'}} {{ item.score }} 分</text>
+          </view>
+          <view class="refer_item_meta">
+            <text>积分变动时间：{{ formatDate(item.addtime) }}</text>
+          </view>
         </view>
       </view>
       <view class="no_result" v-else>
@@ -30,7 +32,7 @@
 
 <script>
 import Taro from "@tarojs/taro";
-import "./rank.less";
+import "./referlog.less";
 import Navbar from "../../components/navbar";
 import { serverUrl } from "../../utils/config";
 import { isLogined, getToken } from "../../utils/tools";
@@ -44,9 +46,6 @@ export default {
       user: {},
       token: getToken(),
       list: [],
-      page: 1,
-      loading: false,
-      loadAll: false,
     };
   },
   onShow() {
@@ -54,12 +53,12 @@ export default {
     this.getUser();
     this.getData();
   },
-  // onReachBottom() {
-  //   this.getData();
-  // },
   methods: {
-    hidePhone(mobile){
-      return mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+    phb(){
+      console.log(1)
+      Taro.navigateTo({
+        url: "/pages/rank/rank",
+      });
     },
     checkAuth() {
       if (isLogined()) {
@@ -95,36 +94,21 @@ export default {
       }).then((res) => {
         if (res.data.errcode == 0) {
           this.user = res.data.user;
-          this.getConfig();
+          // this.getConfig();
         }
       });
     },
     getData() {
-      if (!this.loading && !this.loadAll) {
-        this.loading = true;
-        Taro.request({
-          url: serverUrl + "/userapi/rankdata",
-          data: {
-            token: this.token,
-            page: this.page
-          },
-        }).then((res) => {
-            if (this.page == 1) {
-              if (res.data.data.length > 0) {
-                this.list = res.data.data;
-                this.page++;
-              }
-            } else {
-              if (res.data.data.length > 0) {
-                this.list = [...this.list, ...res.data.data];
-                this.page++;
-              } else {
-                this.loadAll = true;
-              }
-            }
-           this.loading = false;
-        });
-      }
+      Taro.request({
+        url: serverUrl + "/userapi/scorelog",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.list = res.data.data;
+        }
+      });
     },
     formatDate(time) {
       var date = new Date(time * 1000);

@@ -50,6 +50,24 @@
         mode="widthFix"
       />
     </view>
+    <!-- <view class="home_nav">
+      <view class="home_nav_item" @tap="goPage('/pages/combolist/combolist')">
+        <image
+          class="home_nav_ico"
+          src="../../assets/img/a1.svg"
+          mode="widthFix"
+        />
+        <text>合成专区</text>
+      </view>
+      <view class="home_nav_item" @tap="goPage('/pages/mall/mall')">
+        <image
+          class="home_nav_ico"
+          src="../../assets/img/a2.svg"
+          mode="widthFix"
+        />
+        <text>积分商城</text>
+      </view>
+    </view> -->
     <view>
       <view class="nft_list" v-if="nft_list.length > 0">
         <view

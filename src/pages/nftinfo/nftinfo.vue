@@ -160,6 +160,14 @@
         />
         <view>下架</view>
       </view>
+      <view class="op_item" v-if="nftinfo.nft_info.score_sta == 1" @tap="duihuan">
+        <image
+          src="../../assets/img/jf.svg"
+          mode="widthFix"
+          class="op_item_img"
+        />
+        <view>兑换积分</view>
+      </view>
     </view>
     <view class="poster_box" v-if="show_poster">
       <Poster :title="info.name" :cover="info.uri" :ewm="ewm" />
@@ -251,6 +259,42 @@ export default {
     this.getMarketInfo();
   },
   methods: {
+    duihuan() {
+      Taro.showModal({
+        title: "提示",
+        content: "确定将该藏品兑换成积分吗？",
+        success: (res) => {
+          if (res.confirm) {
+            this.duihuanNft();
+          }
+        },
+      });
+    },
+    duihuanNft() {
+      Taro.request({
+        url: serverUrl + "/userapi/scoretrans",
+        data: {
+          token: this.token,
+          id: this.id,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          Taro.showToast({
+            title: "兑换成功",
+            icon: "success",
+          });
+
+          Taro.navigateTo({
+            url: "/pages/user/user",
+          });
+        } else {
+          Taro.showToast({
+            title: res.data.errmsg,
+            icon: "none",
+          });
+        }
+      });
+    },
     xiajia() {
       Taro.showModal({
         title: "提示",

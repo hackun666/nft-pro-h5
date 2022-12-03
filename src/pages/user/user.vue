@@ -36,7 +36,7 @@
             />
           </view>
 
-          <!-- <view class="address price_font">注册手机号：{{ user.mobile }}</view> -->
+          <view class="address price_font">我的积分：{{ user.score }}</view>
           <view class="address price_font">
             <text class="address_hash el price_font" v-if="user.address"
               >钱包地址：{{ user.address }}</text
@@ -102,13 +102,13 @@
             />
             <text>盲盒</text>
           </view>
-          <view class="u_nav_item" @tap="goPage('/pages/translog/translog')">
+          <view class="u_nav_item" @tap="goPage('/pages/tradelog/tradelog')">
             <image
               class="u_nav_ico"
               src="../../assets/img/trans.svg"
               mode="widthFix"
             />
-            <text>转赠记录</text>
+            <text>出售记录</text>
           </view>
           <view class="u_nav_item" @tap="goPage('/pages/poster/poster')">
             <image
@@ -118,13 +118,13 @@
             />
             <text>邀请好友</text>
           </view>
-          <view class="u_nav_item" @tap="goPage('/pages/rank/rank')">
+          <view class="u_nav_item" @tap="goPage('/pages/mall/mall')">
             <image
               class="u_nav_ico"
               src="../../assets/img/phb.svg"
               mode="widthFix"
             />
-            <text>邀请排行</text>
+            <text>积分商城</text>
           </view>
         </view>
       </view>

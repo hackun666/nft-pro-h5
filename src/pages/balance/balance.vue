@@ -1,7 +1,7 @@
 <template>
   <view class="main">
     <Navbar title="我的账户" />
-    <view class="log_btn" @tap="showLog">出售记录</view>
+    <!-- <view class="log_btn" @tap="showLog">出售记录</view> -->
     <view class="info_box">
       <view class="account">
         <view class="ttit">我的余额（元）</view>

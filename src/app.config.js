@@ -46,6 +46,10 @@ export default {
     "pages/xilie/xilie",
     "pages/banklist/banklist",
     "pages/tradelog/tradelog",
+    "pages/mall/mall",
+    "pages/good/good",
+    "pages/address/address",
+    "pages/scorelog/scorelog",
   ],
   window: {
     backgroundTextStyle: "dark",
