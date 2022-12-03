@@ -32,7 +32,7 @@
 
 <script>
 import Taro from "@tarojs/taro";
-import "./referlog.less";
+import "./scorelog.less";
 import Navbar from "../../components/navbar";
 import { serverUrl } from "../../utils/config";
 import { isLogined, getToken } from "../../utils/tools";

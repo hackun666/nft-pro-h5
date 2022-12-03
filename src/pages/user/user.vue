@@ -36,7 +36,7 @@
             />
           </view>
 
-          <view class="address price_font">我的积分：{{ user.score }}</view>
+          <view class="address price_font" @tap="goPage('/pages/scorelog/scorelog')">我的积分：{{ user.score }}</view>
           <view class="address price_font">
             <text class="address_hash el price_font" v-if="user.address"
               >钱包地址：{{ user.address }}</text
