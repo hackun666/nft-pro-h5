@@ -283,10 +283,12 @@ export default {
             title: "兑换成功",
             icon: "success",
           });
+          setTimeout(() => {
+            Taro.navigateTo({
+              url: "/pages/user/user",
+            });
+          }, 1000);
 
-          Taro.navigateTo({
-            url: "/pages/user/user",
-          });
         } else {
           Taro.showToast({
             title: res.data.errmsg,

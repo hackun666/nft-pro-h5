@@ -11,10 +11,13 @@
         >
 
           <view class="refer_item_meta">
-            <text>积分数：{{item.type == 1 ? '增加' : '减少'}} {{ item.score }} 分</text>
+            <text>积分数：{{item.type == 1 ? '+' : '-'}} {{ item.score }} 分</text>
           </view>
           <view class="refer_item_meta">
-            <text>积分变动时间：{{ formatDate(item.addtime) }}</text>
+            <text>积分说明：{{ item.memo }} </text>
+          </view>
+          <view class="refer_item_meta">
+            <text>变动时间：{{ formatDate(item.addtime) }}</text>
           </view>
         </view>
       </view>
