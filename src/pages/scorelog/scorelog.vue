@@ -3,7 +3,7 @@
     <Navbar title="积分记录" />
     <view class="info_box2">
       <view class="refer_list" v-if="list.length > 0">
-        <view class="total_refer">您当前积分数：{{user.score}}人</view>
+        <view class="total_refer">您当前积分数：{{user.score}}</view>
         <view
           class="refer_item"
           v-for="item in list"
@@ -11,7 +11,7 @@
         >
 
           <view class="refer_item_meta">
-            <text>积分数：{{item.type == 1 ? '+' : '-'}} {{ item.score }} 分</text>
+            <text>积分数：{{item.type == 1 ? '+' : '-'}} {{ item.score }} 积分</text>
           </view>
           <view class="refer_item_meta">
             <text>积分说明：{{ item.memo }} </text>

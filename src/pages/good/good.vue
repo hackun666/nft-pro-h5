@@ -105,6 +105,9 @@ export default {
       }).then((res) => {
         if (res.data.errcode == 0) {
           this.address = res.data.data;
+          if (res.data.data) {
+              this.address_id = res.data.data.id
+          }
         }
       });
     },
