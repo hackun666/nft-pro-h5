@@ -34,6 +34,16 @@
             />
           </view>
         </view>
+        <view class="u_menu_item" @tap="cancelUser">
+          <text>注销汇元账户</text>
+          <view class="arrow_box flex_center">
+            <image
+              src="../../assets/img/arrow.svg"
+              class="arrow_icon"
+              mode="widthFix"
+            />
+          </view>
+        </view>
         <view class="u_menu_item" @tap="goPage('/pages/about/about')">
           <text>关于我们</text>
           <view class="arrow_box flex_center">
@@ -68,6 +78,7 @@ export default {
     return {
       cache: 0,
       token: getToken(),
+      user: {}
     };
   },
   mounted() {
@@ -75,8 +86,54 @@ export default {
   },
   onShow() {
     this.checkAuth();
+    this.getUser();
   },
   methods: {
+    getUser() {
+      Taro.request({
+        url: serverUrl + "/userapi/userinfo",
+        data: {
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.data.errcode == 0) {
+          this.user = res.data.user;
+          // this.getConfig();
+        }
+      });
+    },
+    cancelUser() {
+      var that = this
+      Taro.showModal({
+        title: "系统提示",
+        content: "您确认要注销汇元账户吗，请确定账户没有余额",
+        success: function (res) {
+          if (res.confirm) {
+             Taro.request({
+                url: serverUrl + "/heepay/canceluser",
+                data: {
+                  uid: that.user.uid
+                },
+              }).then((res) => {
+                if (res.data.return_code == 'FAIL') {
+                  Taro.showToast({
+                    title: res.data.return_msg,
+                    icon: "none",
+                    duration: 2000,
+                  });
+                } else {
+                  Taro.showToast({
+                    title: res.data.return_msg,
+                    icon: "none",
+                    duration: 2000,
+                  });
+                }
+              });
+          }
+        },
+      });
+
+    },
     checkAuth() {
       if (isLogined()) {
         Taro.request({
