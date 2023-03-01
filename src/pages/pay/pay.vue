@@ -78,7 +78,7 @@
             />
           </view> -->
 
-        <view class="pay_row" @tap="choosePay(4)">
+        <!-- <view class="pay_row" @tap="choosePay(4)">
           <image
             class="pay_ico"
             src="../../assets/img/llpay.svg"
@@ -96,7 +96,7 @@
             src="../../assets/img/unchk.svg"
             mode="widthFix"
           />
-        </view>
+        </view> -->
 
         <view
           class="pay_row"

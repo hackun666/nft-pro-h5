@@ -34,7 +34,7 @@
             />
           </view>
         </view>
-        <view class="u_menu_item" @tap="cancelUser">
+        <!-- <view class="u_menu_item" @tap="cancelUser">
           <text>注销汇元账户</text>
           <view class="arrow_box flex_center">
             <image
@@ -43,7 +43,7 @@
               mode="widthFix"
             />
           </view>
-        </view>
+        </view> -->
         <view class="u_menu_item" @tap="goPage('/pages/about/about')">
           <text>关于我们</text>
           <view class="arrow_box flex_center">

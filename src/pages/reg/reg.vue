@@ -378,6 +378,8 @@ export default {
         },
       }).then((res) => {
         if (res.data.errcode == 0) {
+
+        
           that.time = 0;
           that.captcha_sta = false;
           that.codeid = res.data.codeid;
@@ -391,6 +393,17 @@ export default {
               that.getcodetest = 60 - parseInt(that.time) + "秒后重试";
             }
           }, 1000);
+
+        Taro.showModal({
+          title: "系统提示",
+          content: res.data.errmsg,
+          success: function (res) {
+            if (res.confirm) {
+            }
+          },
+        });
+
+
           return;
         } else {
           Taro.showToast({

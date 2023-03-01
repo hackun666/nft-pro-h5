@@ -1,1 +1,1 @@
-export const serverUrl = "https://m.334art.com";
+export const serverUrl = "http://nft.sdxhan.top";
