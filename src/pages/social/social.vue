@@ -131,7 +131,6 @@ export default {
         });
         
       }else{
-        window.location.href = 'https://wxdata.7192.com/dis_bindwx.html?uid='+this.user.id;
       }
     },
     bindZFB(){

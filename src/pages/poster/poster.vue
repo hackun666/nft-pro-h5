@@ -199,7 +199,7 @@ export default {
         if (res.data.errcode == 0) {
           this.config = res.data.data;
           this.ewm =
-            "http://eicshop.7192.com/ewm.php?url=" +
+            "https://api.qrserver.com/v1/create-qr-code/?data=" +
             encodeURIComponent(
               this.config.domain +
                 "/#/pages/reg/reg?ref_code=" +

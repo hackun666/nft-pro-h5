@@ -10,7 +10,7 @@ export default {
   props: ["cover", "ewm","title"],
   data() {
     return {
-      default_bg: 'http://staticsoft.7192.com/2022/0520/20220520181811305_real.png',
+      default_bg: '',
       imgSrc: "",
       show: false,
       imgSrc: "",

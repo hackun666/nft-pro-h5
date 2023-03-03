@@ -204,7 +204,7 @@ export default {
         title: '加载中'
       })
       this.sta_3d = false
-      this.ewm = 'http://eicshop.7192.com/ewm.php?url='+encodeURIComponent(this.config.domain+'#/pages/detail/detail?id='+this.info.id)
+      this.ewm = 'https://api.qrserver.com/v1/create-qr-code/?data='+encodeURIComponent(this.config.domain+'#/pages/detail/detail?id='+this.info.id)
       this.show_poster = true;
       setTimeout(() => {
         Taro.hideLoading()

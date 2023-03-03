@@ -303,7 +303,7 @@ export default {
       });
       this.sta_3d = false;
       this.ewm =
-        "http://eicshop.7192.com/ewm.php?url=" +
+        "https://api.qrserver.com/v1/create-qr-code/?data=" +
         encodeURIComponent(
           this.config.domain + "#/pages/detail/detail?id=" + this.info.id
         );

@@ -1,5 +1,5 @@
 const config = {
-  projectName: "qy-nft-app",
+  projectName: "nft-pro-h5",
   date: "2022-4-26",
   designWidth: 750,
   deviceRatio: {

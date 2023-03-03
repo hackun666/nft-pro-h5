@@ -1,8 +1,8 @@
 {
-	"name": "nft-app",
+	"name": "nft-pro-h5",
 	"version": "1.0.0",
 	"private": true,
-	"description": "藏品APP",
+	"description": "数字藏品h5端",
 	"templateInfo": {
 		"name": "default",
 		"typescript": false,
