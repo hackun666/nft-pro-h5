@@ -2,7 +2,7 @@
 	"name": "nft-pro-h5",
 	"version": "1.0.0",
 	"private": true,
-	"description": "数字藏品h5端",
+	"description": "数字藏品APP",
 	"templateInfo": {
 		"name": "default",
 		"typescript": false,
@@ -42,18 +42,20 @@
 		"lottie-player-vue": "^0.0.16",
 		"vue": "^2.5.0",
 		"vue-template-compiler": "^2.5.0",
-		"vuejs-loadmore": "^1.0.7"
+		"vuejs-loadmore": "^1.0.7",
+		"weixin-jsapi": "^1.1.0"
 	},
 	"devDependencies": {
-		"@types/webpack-env": "^1.13.6",
-		"@tarojs/mini-runner": "3.3.12",
 		"@babel/core": "^7.8.0",
+		"@tarojs/mini-runner": "3.3.12",
 		"@tarojs/webpack-runner": "3.3.12",
+		"@types/webpack-env": "^1.13.6",
 		"babel-preset-taro": "3.3.12",
-		"vue-loader": "^15.9.2",
-		"eslint-plugin-vue": "^6.x",
-		"eslint-config-taro": "3.3.12",
 		"eslint": "^6.8.0",
-		"stylelint": "9.3.0"
+		"eslint-config-taro": "3.3.12",
+		"eslint-plugin-vue": "^6.x",
+		"stylelint": "9.3.0",
+		"vue-loader": "^15.9.2",
+		"webpack": "^4.0.0"
 	}
 }
